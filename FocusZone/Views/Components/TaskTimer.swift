@@ -10,11 +10,13 @@ struct TaskTimer: View {
     @State private var showCompletionAlert = false
     @State private var isAutoCompleted = false
     @State private var isLocked = false
-    
+    @StateObject private var focusManager = FocusModeManager()
+
     var body: some View {
 
         NavigationView {
             VStack(spacing: 30) {
+                
                 // Task Info Header
                 VStack(spacing: 12) {
                     Text(task.icon)
@@ -104,8 +106,10 @@ struct TaskTimer: View {
                     .background(Color.gray.opacity(0.1))
                     .cornerRadius(10)
                     .onChange(of: isLocked) { _, _ in
+                        
                         let generator = UIImpactFeedbackGenerator(style: .medium)
                         generator.impactOccurred()
+            
                     }
                 if !isLocked {
                     VStack(spacing: 16) {
@@ -158,6 +162,13 @@ struct TaskTimer: View {
 
                     }
                 } else {
+                    if focusManager.isActiveFocus {
+                          FocusStatusBanner(
+                              mode: focusManager.currentFocusMode,
+                              blockedNotifications: focusManager.blockedNotifications
+                          )
+                      }
+                    
                     Text("Controls are locked until the timer ends.")
                         .font(AppFonts.subheadline())
                         .foregroundColor(.gray)
@@ -251,6 +262,13 @@ struct TaskTimer: View {
             if timerService.currentTask == nil {
                 timerService.startTask(task)
                 isLocked = true
+            }
+
+            if ((task.focusSettings?.isEnabled) != nil) {
+                focusManager.blockedNotifications = 1
+                _Concurrency.Task {
+                    await focusManager.activateFocus(mode: .deepWork, duration: TimeInterval(timerService.currentRemainingMinutes * 60))
+                }
             }
         }
         .onChange(of: timerService.currentTask?.isCompleted) { _, isCompleted in

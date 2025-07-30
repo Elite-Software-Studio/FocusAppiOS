@@ -13,6 +13,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		431164BF2E3671A1006A9907 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 43B948D72E22CB9B00392FD0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 43B948DE2E22CB9B00392FD0;
+			remoteInfo = FocusZone;
+		};
 		437BF8E82E2D4F0300544334 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 43B948D72E22CB9B00392FD0 /* Project object */;
@@ -37,6 +44,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		431164BB2E3671A1006A9907 /* FocusZoneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FocusZoneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		437BF8D42E2D4F0200544334 /* FocusZoneWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FocusZoneWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		437BF8D62E2D4F0200544334 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		437BF8D82E2D4F0200544334 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -60,6 +68,9 @@
 				"Helpers/Extensions/Color+Ext.swift",
 				"Helpers/Extensions/Task+Ext.swift",
 				Models/BreakSuggestion.swift,
+				"Models/FocusAnalytics.swift  .swift",
+				Models/FocusSession.swift,
+				Models/FocusSettings.swift,
 				Models/RepeatRule.swift,
 				Models/Task.swift,
 				Models/TaskType.swift,
@@ -70,6 +81,7 @@
 				ViewModels/SmartBreakAnalyzer.swift,
 				Views/Components/ItemList/BreakSuggestionCard.swift,
 				Views/Components/ItemList/FeatureRow.swift,
+				Views/Components/ItemList/FocusModeCard.swift,
 				Views/Components/ItemList/InsightCard.swift,
 				Views/Components/Modal/UpgradeToProSheet.swift,
 				Views/Screens/FocusInsightsView.swift,
@@ -86,6 +98,11 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		431164BC2E3671A1006A9907 /* FocusZoneTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = FocusZoneTests;
+			sourceTree = "<group>";
+		};
 		437BF8DA2E2D4F0200544334 /* FocusZoneWidget */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -106,6 +123,13 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		431164B82E3671A1006A9907 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		437BF8D12E2D4F0200544334 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -140,6 +164,7 @@
 				437BF8F92E2D526300544334 /* FocusZoneWidgetExtension.entitlements */,
 				43B948E12E22CB9B00392FD0 /* FocusZone */,
 				437BF8DA2E2D4F0200544334 /* FocusZoneWidget */,
+				431164BC2E3671A1006A9907 /* FocusZoneTests */,
 				437BF8D52E2D4F0200544334 /* Frameworks */,
 				43B948E02E22CB9B00392FD0 /* Products */,
 			);
@@ -150,6 +175,7 @@
 			children = (
 				43B948DF2E22CB9B00392FD0 /* FocusZone.app */,
 				437BF8D42E2D4F0200544334 /* FocusZoneWidgetExtension.appex */,
+				431164BB2E3671A1006A9907 /* FocusZoneTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -157,6 +183,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		431164BA2E3671A1006A9907 /* FocusZoneTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 431164C12E3671A1006A9907 /* Build configuration list for PBXNativeTarget "FocusZoneTests" */;
+			buildPhases = (
+				431164B72E3671A1006A9907 /* Sources */,
+				431164B82E3671A1006A9907 /* Frameworks */,
+				431164B92E3671A1006A9907 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				431164C02E3671A1006A9907 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				431164BC2E3671A1006A9907 /* FocusZoneTests */,
+			);
+			name = FocusZoneTests;
+			packageProductDependencies = (
+			);
+			productName = FocusZoneTests;
+			productReference = 431164BB2E3671A1006A9907 /* FocusZoneTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		437BF8D32E2D4F0200544334 /* FocusZoneWidgetExtension */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 437BF8EB2E2D4F0300544334 /* Build configuration list for PBXNativeTarget "FocusZoneWidgetExtension" */;
@@ -213,6 +262,10 @@
 				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
+					431164BA2E3671A1006A9907 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 43B948DE2E22CB9B00392FD0;
+					};
 					437BF8D32E2D4F0200544334 = {
 						CreatedOnToolsVersion = 16.2;
 					};
@@ -237,11 +290,19 @@
 			targets = (
 				43B948DE2E22CB9B00392FD0 /* FocusZone */,
 				437BF8D32E2D4F0200544334 /* FocusZoneWidgetExtension */,
+				431164BA2E3671A1006A9907 /* FocusZoneTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		431164B92E3671A1006A9907 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		437BF8D22E2D4F0200544334 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -259,6 +320,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		431164B72E3671A1006A9907 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		437BF8D02E2D4F0200544334 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -276,6 +344,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		431164C02E3671A1006A9907 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 43B948DE2E22CB9B00392FD0 /* FocusZone */;
+			targetProxy = 431164BF2E3671A1006A9907 /* PBXContainerItemProxy */;
+		};
 		437BF8E92E2D4F0300544334 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 437BF8D32E2D4F0200544334 /* FocusZoneWidgetExtension */;
@@ -284,6 +357,42 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		431164C22E3671A1006A9907 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = YLRTX7D6A9;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ios.focus.jf.com.FocusZoneTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FocusZone.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FocusZone";
+			};
+			name = Debug;
+		};
+		431164C32E3671A1006A9907 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = YLRTX7D6A9;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ios.focus.jf.com.FocusZoneTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FocusZone.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FocusZone";
+			};
+			name = Release;
+		};
 		437BF8EC2E2D4F0300544334 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -475,8 +584,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -506,8 +614,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -524,6 +631,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		431164C12E3671A1006A9907 /* Build configuration list for PBXNativeTarget "FocusZoneTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				431164C22E3671A1006A9907 /* Debug */,
+				431164C32E3671A1006A9907 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		437BF8EB2E2D4F0300544334 /* Build configuration list for PBXNativeTarget "FocusZoneWidgetExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

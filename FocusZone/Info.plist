@@ -2,9 +2,68 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UIAppFonts</key>
-	<array>
-		<string> Montserrat-Regular.ttf</string>
-	</array>
+    <!-- Existing entries -->
+    <key>UIAppFonts</key>
+    <array>
+        <string>Montserrat-Regular.ttf</string>
+    </array>
+    
+    <!-- Add these new entries for Focus Mode support -->
+    
+    <!-- Intents Support -->
+    <key>NSSupportsLiveActivities</key>
+    <true/>
+    
+    <!-- User Notifications Permission -->
+    <key>NSUserNotificationsUsageDescription</key>
+    <string>FocusZone needs notification access to filter distractions during focus sessions and provide task reminders.</string>
+    
+    <!-- Intents Supported (for iOS 15+) -->
+    <key>NSIntentsSupported</key>
+    <array>
+        <string>INSetFocusStatusIntent</string>
+    </array>
+    
+    <!-- User Activity Types for Shortcuts -->
+    <key>NSUserActivityTypes</key>
+    <array>
+        <string>StartFocusSessionIntent</string>
+        <string>StopFocusSessionIntent</string>
+        <string>com.focuszone.start-focus</string>
+        <string>com.focuszone.stop-focus</string>
+    </array>
+    
+    <!-- App Intent Phrases (for iOS 16+) -->
+    <key>AppIntents</key>
+    <array>
+        <dict>
+            <key>IntentClassName</key>
+            <string>StartFocusSessionIntent</string>
+            <key>IntentType</key>
+            <string>Custom</string>
+        </dict>
+        <dict>
+            <key>IntentClassName</key>
+            <string>StopFocusSessionIntent</string>
+            <key>IntentType</key>
+            <string>Custom</string>
+        </dict>
+    </array>
+    
+    <!-- Background Modes (if needed for focus sessions) -->
+    <key>UIBackgroundModes</key>
+    <array>
+        <string>background-processing</string>
+        <string>background-fetch</string>
+    </array>
+    
+    <!-- Focus Mode Categories -->
+    <key>FocusModeCategories</key>
+    <array>
+        <string>Work</string>
+        <string>Study</string>
+        <string>Sleep</string>
+        <string>Fitness</string>
+    </array>
 </dict>
 </plist>

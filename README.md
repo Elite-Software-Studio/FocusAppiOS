@@ -4,11 +4,11 @@ FocusZone is a productivity application designed to help users manage their task
 
 ## Features
 
-- **Task Management**: Create, edit, and organize tasks with various attributes like duration, color, and type.
-- **Task Timer**: Start, pause, resume, and complete tasks with real-time tracking.
-- **AI Assistance**: Get suggestions and insights for better task management.
-- **Customizable Themes**: Personalize the app with different colors and fonts.
-- **Notifications**: Receive reminders and updates for your tasks.
+-   **Task Management**: Create, edit, and organize tasks with various attributes like duration, color, and type.
+-   **Task Timer**: Start, pause, resume, and complete tasks with real-time tracking.
+-   **AI Assistance**: Get suggestions and insights for better task management.
+-   **Customizable Themes**: Personalize the app with different colors and fonts.
+-   **Notifications**: Receive reminders and updates for your tasks.
 
 ## Project Structure
 
@@ -95,20 +95,20 @@ FocusZone/
 
 ## Requirements
 
-- Xcode 14 or later
-- Swift 5.8 or later
-- iOS 16.0 or later
+-   Xcode 14 or later
+-   Swift 5.8 or later
+-   iOS 16.0 or later
 
 ## Installation
 
 1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/FocusZone.git
-   ```
+    ```bash
+    git clone https://github.com/yourusername/FocusZone.git
+    ```
 2. Open the project in Xcode:
-   ```bash
-   open FocusZone.xcodeproj
-   ```
+    ```bash
+    open FocusZone.xcodeproj
+    ```
 3. Build and run the project on a simulator or device.
 
 ## Contributing

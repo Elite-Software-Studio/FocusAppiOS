@@ -5,7 +5,8 @@ struct SettingsView: View {
     @State private var notificationsEnabled = true
     @State private var autoSaveEnabled = true
     @State private var showingAbout = false
-    
+    @State private var enableFocusMode = true
+    @StateObject private var focusManager = FocusModeManager()
     var body: some View {
         NavigationView {
             ScrollView {
@@ -18,6 +19,7 @@ struct SettingsView: View {
                         appearanceSection
                         notificationSection
                         dataSection
+                        focusSection
                         aboutSection
                     }
                     .padding(.horizontal, 20)
@@ -28,6 +30,9 @@ struct SettingsView: View {
             }
             .background(AppColors.background.ignoresSafeArea())
             .navigationBarHidden(true)
+        }
+        .onChange(of: theme.currentBackground) { newValue in
+            // TODO Store preference
         }
         .sheet(isPresented: $showingAbout) {
             AboutSheet()
@@ -95,6 +100,22 @@ struct SettingsView: View {
             }
         }
     }
+    // Focus  Section
+    private var focusSection: some View {
+        SettingsSection(title: "Appearance", icon: "paintbrush") {
+            VStack(spacing: 0) {
+                
+                SettingsToggleRow(
+                    title: "Focus & Concentration",
+                    subtitle: "Get notified when tasks are starting",
+                    icon: "bell.circle.fill",
+                    isOn: $enableFocusMode
+                )
+                
+            }
+            
+        }
+    }
     
     // MARK: - Notifications Section
     private var notificationSection: some View {
@@ -108,6 +129,8 @@ struct SettingsView: View {
                 )
             }
         }
+        
+        
     }
     
     // MARK: - Data Section
@@ -186,14 +209,14 @@ struct SettingsSection<Content: View>: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(spacing: 8) {
-//                Image(systemName: icon)
-//                    .font(.system(size: 18))
-//                    .foregroundColor(AppColors.accent)
+                //                Image(systemName: icon)
+                //                    .font(.system(size: 18))
+                //                    .foregroundColor(AppColors.accent)
                 
-//                Text(title)
-//                    .font(AppFonts.headline())
-//                    .foregroundColor(AppColors.textPrimary)
-//                    .fontWeight(.semibold)
+                //                Text(title)
+                //                    .font(AppFonts.headline())
+                //                    .foregroundColor(AppColors.textPrimary)
+                //                    .fontWeight(.semibold)
             }
             .padding(.horizontal, 4)
             
@@ -280,6 +303,9 @@ struct SettingsNavigationRow: View {
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 14)
+        }
+        .onChange(of: isDestructive) { newValue in
+          
         }
         .buttonStyle(PlainButtonStyle())
     }

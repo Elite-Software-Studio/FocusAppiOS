@@ -11,6 +11,8 @@ struct TaskFormView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.colorScheme) var colorScheme
     
+    @State private var selectedFocusMode: FocusMode? = nil
+    @State private var enableFocusMode: Bool = false
     // Task to edit (nil for new task)
     let taskToEdit: Task?
     
@@ -58,6 +60,12 @@ struct TaskFormView: View {
                             TaskDurationSelector(duration: $duration)
                             
                             TaskIconPicker(selectedIcon: $selectedIcon)
+                            
+                            FocusModeFormSection(
+                                               isEnabled: $enableFocusMode,
+                                               selectedMode: $selectedFocusMode,
+                                               taskType: selectedTaskType
+                                           )
                             
                             TaskColorPicker(selectedColor: $selectedColor)
                             

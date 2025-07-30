@@ -10,6 +10,8 @@ class TaskTimerService: ObservableObject {
     private var startTime: Date?
     private var modelContext: ModelContext?
     
+    @StateObject private var focusManager = FocusModeManager()
+    
     func setModelContext(_ context: ModelContext) {
         self.modelContext = context
     }
@@ -40,6 +42,9 @@ class TaskTimerService: ObservableObject {
         print("TaskTimerService: Starting task '\(task.title)' with \(timeAlreadySpent)m already elapsed")
         print("TaskTimerService: Starting timer at \(startingElapsedSeconds) seconds")
         
+        _Concurrency.Task {
+          await  focusManager.setupCustomNotificationFiltering(for: .deepWork)
+        }
         startTimer()
     }
     
@@ -69,11 +74,11 @@ class TaskTimerService: ObservableObject {
                 let remainingSeconds = Int(remaining)
                 return remainingSeconds / 60
             }
-        
+            
         }
         return 0
     }
-        
+    
     
     
     // Pause the current task
@@ -140,6 +145,10 @@ class TaskTimerService: ObservableObject {
             print("TaskTimerService: Stopped task with \(totalTimeSpent)m total time")
         }
         
+        
+        _Concurrency.Task {
+            await focusManager.deactivateFocus()
+        }
         currentTask = nil
         elapsedSeconds = 0
         startTime = nil

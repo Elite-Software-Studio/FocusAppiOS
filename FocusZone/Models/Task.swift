@@ -28,6 +28,8 @@ class Task {
     // Parent-Child Relationship
     var parentTaskId: UUID? // Track the original task for virtual tasks
     var isGeneratedFromRepeat: Bool = false
+    var focusSettingsData: Data?
+
     
     // SwiftData relationships (one-to-many)
     @Relationship(deleteRule: .cascade, inverse: \Task.parentTask)
@@ -72,6 +74,17 @@ class Task {
         self.isGeneratedFromRepeat = isGeneratedFromRepeat
         self.parentTask = parentTask
     }
+    
+    var focusSettings: FocusSettings? {
+         get {
+             guard let data = focusSettingsData else { return nil }
+             return try? JSONDecoder().decode(FocusSettings.self, from: data)
+         }
+         set {
+             focusSettingsData = try? JSONEncoder().encode(newValue)
+             updatedAt = Date()
+         }
+     }
     
     // Computed properties
     var color: Color {
