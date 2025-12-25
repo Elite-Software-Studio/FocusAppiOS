@@ -13,7 +13,7 @@ struct LiquidTaskTitleInput: View {
             HStack(spacing: LiquidDesignSystem.Spacing.sm) {
                 // Icon
                 Image(systemName: "checkmark.circle.fill")
-                    .foregroundStyle(LiquidDesignSystem.Colors.accent)
+                    .foregroundStyle(LiquidDesignSystem.Colors.primary)
                     .font(.title3)
                 
                 // Text field
@@ -21,7 +21,7 @@ struct LiquidTaskTitleInput: View {
                     NSLocalizedString("task_title", comment: "Task title input placeholder"),
                     text: $taskTitle
                 )
-                .font(LiquidDesignSystem.Typography.headlineFont)
+                .font(LiquidDesignSystem.Typography.titleMedium)
                 .foregroundStyle(LiquidDesignSystem.Colors.textPrimary)
                 .textFieldStyle(PlainTextFieldStyle())
                 .focused($isFocused)

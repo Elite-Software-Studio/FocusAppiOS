@@ -16,7 +16,7 @@ struct LiquidDatePickerSheet: View {
                     VStack(spacing: LiquidDesignSystem.Spacing.xl) {
                         // Title
                         Text(NSLocalizedString("select_date", comment: "Select date title"))
-                            .font(LiquidDesignSystem.Typography.largeTitleFont)
+                            .font(LiquidDesignSystem.Typography.titleLarge)
                             .fontWeight(.bold)
                             .foregroundStyle(LiquidDesignSystem.Colors.textPrimary)
                             .padding(.top, LiquidDesignSystem.Spacing.lg)
@@ -90,7 +90,7 @@ struct LiquidDatePickerSheet: View {
     
     private func quickDateButton(title: String, date: Date, icon: String) -> some View {
         Button(action: {
-            withAnimation(LiquidDesignSystem.Animation.spring) {
+            withAnimation(LiquidDesignSystem.Animation.quick) {
                 selectedDate = date
             }
             currentWeekOffset = 0

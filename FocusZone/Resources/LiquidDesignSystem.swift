@@ -39,6 +39,7 @@ struct LiquidDesignSystem {
         static let warning = Color(hex: "#F59E0B") ?? .orange
         static let error = Color(hex: "#EF4444") ?? .red
         static let info = Color(hex: "#3B82F6") ?? .blue
+        static let  accent = Color(hex: "#F59E0B") ?? .blue
         
         // Glass Effects
         static let glassBackground = Color.white.opacity(0.15)
@@ -93,6 +94,9 @@ struct LiquidDesignSystem {
         static let headlineLarge = Font.system(size: 32, weight: .bold, design: .rounded)
         static let headlineMedium = Font.system(size: 28, weight: .semibold, design: .rounded)
         static let headlineSmall = Font.system(size: 24, weight: .semibold, design: .rounded)
+        static let headlineFont = Font.system(size: 18, weight: .semibold, design: .rounded)
+        
+        static let subheadlineFont = Font.system(size: 16, weight: .semibold, design: .rounded)
         
         // Title
         static let titleLarge = Font.system(size: 22, weight: .semibold, design: .rounded)
@@ -104,6 +108,8 @@ struct LiquidDesignSystem {
         static let bodyMedium = Font.system(size: 14, weight: .regular, design: .default)
         static let bodySmall = Font.system(size: 12, weight: .regular, design: .default)
         
+        static let bodyFont  = Font.system(size: 14, weight: .regular, design: .default)
+        
         // Label
         static let labelLarge = Font.system(size: 14, weight: .medium, design: .default)
         static let labelMedium = Font.system(size: 12, weight: .medium, design: .default)
@@ -112,6 +118,7 @@ struct LiquidDesignSystem {
         // Caption
         static let caption = Font.system(size: 11, weight: .regular, design: .default)
         static let captionBold = Font.system(size: 11, weight: .semibold, design: .default)
+        static let captionFont = Font.system(size: 11, weight: .regular, design: .default)
     }
     
     // MARK: - Spacing
@@ -275,6 +282,25 @@ extension LiquidDesignSystem {
                 )
             }
         }
+    }
+}
+
+// MARK: - Color Extension for View Helpers
+
+extension LiquidDesignSystem.Colors {
+    /// Adaptive mesh gradient background that responds to color scheme
+    static var meshGradientBackground: some View {
+        MeshGradientBackgroundView()
+    }
+}
+
+// MARK: - Helper Views
+
+private struct MeshGradientBackgroundView: View {
+    @Environment(\.colorScheme) var colorScheme
+    
+    var body: some View {
+        LiquidDesignSystem.Gradients.meshBackground(colorScheme)
     }
 }
 

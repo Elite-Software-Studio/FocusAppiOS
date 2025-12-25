@@ -76,7 +76,7 @@ struct LiquidTaskTimeSelector: View {
                         loadCurrentTime()
                     }
                 }
-                .font(LiquidDesignSystem.Typography.subheadlineFont)
+                .font(LiquidDesignSystem.Typography.displayMedium.monospaced())
                 .foregroundStyle(LiquidDesignSystem.Colors.accent)
             }
             
@@ -152,12 +152,12 @@ struct LiquidTaskTimeSelector: View {
                         }
                     }) {
                         Text(selectedTimeString)
-                            .font(LiquidDesignSystem.Typography.titleFont)
+                            .font(LiquidDesignSystem.Typography.titleLarge)
                             .fontWeight(.bold)
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, LiquidDesignSystem.Spacing.md)
-                            .background(LiquidDesignSystem.Colors.accentGradient)
+                            .background(LiquidDesignSystem.Colors.accent)
                             .clipShape(RoundedRectangle(cornerRadius: LiquidDesignSystem.CornerRadius.lg))
                             .shadow(
                                 color: LiquidDesignSystem.Colors.accent.opacity(0.4),
@@ -207,7 +207,7 @@ struct LiquidTaskTimeSelector: View {
                 .padding(.vertical, LiquidDesignSystem.Spacing.sm)
                 .background(
                     RoundedRectangle(cornerRadius: LiquidDesignSystem.CornerRadius.md)
-                        .fill(isSelected ? LiquidDesignSystem.Colors.accentGradient : LiquidDesignSystem.Colors.glassBackground)
+                        .fill(isSelected ? LiquidDesignSystem.Colors.accent : LiquidDesignSystem.Colors.glassBackground)
                 )
         }
         .buttonStyle(LiquidButtonStyle(variant: isSelected ? .primary : .ghost))

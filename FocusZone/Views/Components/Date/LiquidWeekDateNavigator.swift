@@ -35,7 +35,7 @@ struct LiquidWeekDateNavigator: View {
                 Button(action: { showingDatePicker = true }) {
                     HStack(spacing: LiquidDesignSystem.Spacing.xs) {
                         Text(monthYearString(from: selectedDate))
-                            .font(LiquidDesignSystem.Typography.titleFont)
+                            .font(LiquidDesignSystem.Typography.titleLarge)
                             .fontWeight(.bold)
                             .foregroundStyle(LiquidDesignSystem.Colors.textPrimary)
                         
@@ -89,7 +89,7 @@ struct LiquidWeekDateNavigator: View {
                             .foregroundColor(.white)
                             .padding(.horizontal, 14)
                             .padding(.vertical, 8)
-                            .background(LiquidDesignSystem.Colors.accentGradient)
+                            .background(LiquidDesignSystem.Colors.accent.opacity(0.85))
                             .clipShape(Capsule())
                             .shadow(
                                 color: LiquidDesignSystem.Colors.accent.opacity(0.4),

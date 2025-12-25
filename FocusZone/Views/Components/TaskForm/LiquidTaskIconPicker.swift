@@ -26,7 +26,7 @@ struct LiquidTaskIconPicker: View {
                         icon: icon,
                         isSelected: selectedIcon == icon,
                         action: {
-                            withAnimation(LiquidDesignSystem.Animation.spring) {
+                            withAnimation(LiquidDesignSystem.Animation.quick) {
                                 selectedIcon = icon
                             }
                         }
@@ -76,7 +76,7 @@ struct LiquidIconButton: View {
         }
         .buttonStyle(PlainButtonStyle())
         .scaleEffect(isSelected ? 1.1 : 1.0)
-        .animation(LiquidDesignSystem.Animation.spring, value: isSelected)
+        .animation(LiquidDesignSystem.Animation.quick, value: isSelected)
     }
 }
 

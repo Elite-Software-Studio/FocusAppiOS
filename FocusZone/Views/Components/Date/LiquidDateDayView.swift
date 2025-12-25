@@ -28,7 +28,7 @@ struct LiquidDateDayView: View {
                 Circle()
                     .fill(
                         isSelected
-                            ? LiquidDesignSystem.Colors.accentGradient
+                            ? LiquidDesignSystem.Colors.accent
                             : LiquidDesignSystem.Colors.glassBackground
                     )
                     .frame(width: 48, height: 48)
@@ -52,7 +52,7 @@ struct LiquidDateDayView: View {
                 
                 // Day number
                 Text(dayString(from: date))
-                    .font(LiquidDesignSystem.Typography.bodyFont)
+                    .font(LiquidDesignSystem.Typography.bodyLarge.bold())
                     .fontWeight(isSelected ? .bold : .semibold)
                     .foregroundStyle(textColor)
                 
@@ -79,12 +79,12 @@ struct LiquidDateDayView: View {
         }
         .padding(.vertical, 4)
         .scaleEffect(isPressed ? 0.9 : (isSelected ? 1.05 : 1.0))
-        .animation(LiquidDesignSystem.Animation.spring, value: isSelected)
-        .animation(LiquidDesignSystem.Animation.quickSpring, value: isPressed)
+        .animation(LiquidDesignSystem.Animation.smooth, value: isSelected)
+        .animation(LiquidDesignSystem.Animation.quick, value: isPressed)
         .onTapGesture {
             isPressed = true
             
-            withAnimation(LiquidDesignSystem.Animation.spring) {
+            withAnimation(LiquidDesignSystem.Animation.smooth) {
                 selectedDate = date
             }
             

@@ -6,8 +6,7 @@ struct LiquidTaskFormHeader: View {
     var body: some View {
         HStack {
             Text(NSLocalizedString("new_task", comment: "New task header title"))
-                .font(LiquidDesignSystem.Typography.largeTitleFont)
-                .fontWeight(.bold)
+                .font(LiquidDesignSystem.Typography.headlineLarge)
                 .foregroundStyle(LiquidDesignSystem.Colors.textPrimary)
             
             Spacer()
@@ -36,6 +35,6 @@ struct LiquidTaskFormHeader: View {
 
 #Preview {
     LiquidTaskFormHeader(onDismiss: {})
-        .background(LiquidDesignSystem.Colors.meshGradientBackground)
+        .background(LiquidDesignSystem.Gradients.meshBackground(.light))
 }
 

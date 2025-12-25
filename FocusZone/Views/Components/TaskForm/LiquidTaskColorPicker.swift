@@ -2,6 +2,7 @@ import SwiftUI
 
 struct LiquidTaskColorPicker: View {
     @Binding var selectedColor: Color
+    @Environment(\.colorScheme) var colorScheme
     
     private let quickColors: [Color] = [
         .pink, .orange, .yellow, .green, .teal, .blue, .purple
@@ -14,7 +15,7 @@ struct LiquidTaskColorPicker: View {
             // Header
             HStack {
                 Text("What color?")
-                    .font(LiquidDesignSystem.Typography.headlineFont)
+                    .font(LiquidDesignSystem.Typography.headlineSmall)
                     .foregroundStyle(LiquidDesignSystem.Colors.textSecondary)
                 
                 Spacer()
@@ -22,8 +23,8 @@ struct LiquidTaskColorPicker: View {
                 Button("More…") {
                     showPickerSheet = true
                 }
-                .font(LiquidDesignSystem.Typography.subheadlineFont)
-                .foregroundStyle(LiquidDesignSystem.Colors.accent)
+                .font(LiquidDesignSystem.Typography.titleSmall)
+                .foregroundStyle(LiquidDesignSystem.Colors.primary)
             }
             
             // Quick colors row
@@ -32,7 +33,7 @@ struct LiquidTaskColorPicker: View {
                     ForEach(quickColors.indices, id: \.self) { idx in
                         let color = quickColors[idx]
                         Button(action: {
-                            withAnimation(LiquidDesignSystem.Animation.spring) {
+                            withAnimation(LiquidDesignSystem.Animation.smooth) {
                                 selectedColor = color
                             }
                         }) {
@@ -62,7 +63,7 @@ struct LiquidTaskColorPicker: View {
                         }
                         .buttonStyle(PlainButtonStyle())
                         .scaleEffect(selectedColor == color ? 1.1 : 1.0)
-                        .animation(LiquidDesignSystem.Animation.spring, value: selectedColor)
+                        .animation(LiquidDesignSystem.Animation.smooth, value: selectedColor)
                     }
                 }
                 .padding(.vertical, LiquidDesignSystem.Spacing.sm)
@@ -73,7 +74,7 @@ struct LiquidTaskColorPicker: View {
         .sheet(isPresented: $showPickerSheet) {
             NavigationView {
                 ZStack {
-                    LiquidDesignSystem.Colors.meshGradientBackground
+                    LiquidDesignSystem.Gradients.meshBackground(colorScheme)
                         .ignoresSafeArea()
                     
                     VStack(spacing: LiquidDesignSystem.Spacing.xl) {
@@ -96,7 +97,7 @@ struct LiquidTaskColorPicker: View {
                         Button("Close") {
                             showPickerSheet = false
                         }
-                        .foregroundStyle(LiquidDesignSystem.Colors.accent)
+                        .foregroundStyle(LiquidDesignSystem.Colors.primary)
                     }
                 }
             }
@@ -107,8 +108,8 @@ struct LiquidTaskColorPicker: View {
 #Preview {
     @Previewable @State var selectedColor = Color.pink
     
-    return LiquidTaskColorPicker(selectedColor: $selectedColor)
+    LiquidTaskColorPicker(selectedColor: $selectedColor)
         .padding()
-        .background(LiquidDesignSystem.Colors.meshGradientBackground)
+        .background(LiquidDesignSystem.Gradients.meshBackground(.light))
 }
 

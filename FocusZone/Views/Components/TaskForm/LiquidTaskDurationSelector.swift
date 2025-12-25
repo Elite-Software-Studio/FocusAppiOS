@@ -46,7 +46,7 @@ struct LiquidTaskDurationSelector: View {
                 Spacer()
                 
                 Button(showExtendedRow ? NSLocalizedString("hide", comment: "Hide button") : NSLocalizedString("more", comment: "More button")) {
-                    withAnimation(LiquidDesignSystem.Animation.spring) {
+                    withAnimation(LiquidDesignSystem.Animation.easeOut) {
                         showExtendedRow.toggle()
                     }
                 }
@@ -79,37 +79,51 @@ struct LiquidTaskDurationSelector: View {
     private func durationRow(options: [Int]) -> some View {
         HStack(spacing: LiquidDesignSystem.Spacing.xs) {
             ForEach(options, id: \.self) { minutes in
-                Button(action: {
-                    withAnimation(LiquidDesignSystem.Animation.spring) {
-                        duration = minutes
-                    }
-                }) {
-                    Text(durationDisplayText(minutes))
-                        .font(LiquidDesignSystem.Typography.captionFont)
-                        .fontWeight(.medium)
-                        .foregroundColor(duration == minutes ? .white : LiquidDesignSystem.Colors.textPrimary)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, LiquidDesignSystem.Spacing.sm)
-                        .background(
-                            RoundedRectangle(cornerRadius: LiquidDesignSystem.CornerRadius.md)
-                                .fill(
-                                    duration == minutes
-                                        ? LiquidDesignSystem.Colors.accentGradient
-                                        : LiquidDesignSystem.Colors.glassBackground
-                                )
-                        )
-                        .shadow(
-                            color: duration == minutes 
-                                ? LiquidDesignSystem.Colors.accent.opacity(0.3)
-                                : Color.clear,
-                            radius: duration == minutes ? 8 : 0,
-                            x: 0,
-                            y: duration == minutes ? 4 : 0
-                        )
-                }
-                .buttonStyle(LiquidButtonStyle(variant: duration == minutes ? .primary : .ghost))
+                durationButton(for: minutes)
             }
         }
+    }
+    
+    private func durationButton(for minutes: Int) -> some View {
+        let isSelected = duration == minutes
+        let textColor = isSelected ? Color.white : LiquidDesignSystem.Colors.textPrimary
+        let backgroundFill = isSelected 
+            ? AnyShapeStyle(LinearGradient(
+                colors: [LiquidDesignSystem.Colors.accent, LiquidDesignSystem.Colors.accent.opacity(0.8)],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            ))
+            : AnyShapeStyle(LiquidDesignSystem.Colors.glassBackground)
+        let shadowColor = isSelected 
+            ? LiquidDesignSystem.Colors.accent.opacity(0.3) 
+            : Color.clear
+        let shadowRadius: CGFloat = isSelected ? 8 : 0
+        let shadowY: CGFloat = isSelected ? 4 : 0
+        let buttonVariant: LiquidButtonStyle.Variant = isSelected ? .primary : .ghost
+        
+        return Button(action: {
+            withAnimation(LiquidDesignSystem.Animation.quick) {
+                duration = minutes
+            }
+        }) {
+            Text(durationDisplayText(minutes))
+                .font(LiquidDesignSystem.Typography.captionFont)
+                .fontWeight(.medium)
+                .foregroundColor(textColor)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, LiquidDesignSystem.Spacing.sm)
+                .background(
+                    RoundedRectangle(cornerRadius: LiquidDesignSystem.CornerRadius.md)
+                        .fill(backgroundFill)
+                )
+                .shadow(
+                    color: shadowColor,
+                    radius: shadowRadius,
+                    x: 0,
+                    y: shadowY
+                )
+        }
+        .buttonStyle(LiquidButtonStyle(variant: buttonVariant))
     }
 }
 
