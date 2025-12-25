@@ -18,120 +18,7 @@ struct LiquidTimelineView: View {
     
     var body: some View {
         NavigationView {
-            ZStack {
-                // Liquid mesh background
-                LiquidDesignSystem.Gradients.meshBackground(colorScheme)
-                    .ignoresSafeArea()
-                
-                VStack(spacing: LiquidDesignSystem.Spacing.lg) {
-                    // Notification permission banner
-                    if !notificationService.isAuthorized {
-                        notificationPermissionBanner
-                            .padding(.horizontal, LiquidDesignSystem.Spacing.md)
-                            .transition(.move(edge: .top).combined(with: .opacity))
-                    }
-                    
-                    // Date Header - Fixed at top
-                    WeekDateNavigator(
-                        selectedDate: $selectedDate
-                    )
-                    .padding(.horizontal, LiquidDesignSystem.Spacing.md)
-                    
-                    // Main Content Area
-                    ScrollViewReader { proxy in
-                        ScrollView(.vertical, showsIndicators: false) {
-                            LazyVStack(spacing: LiquidDesignSystem.Spacing.md) {
-                                if viewModel.tasks.isEmpty {
-                                    // Empty state with liquid design
-                                    emptyStateView
-                                        .padding(.top, LiquidDesignSystem.Spacing.xxl)
-                                } else {
-                                    ForEach(Array(viewModel.tasks.enumerated()), id: \.element.id) { index, task in
-                                        LiquidTaskCard(
-                                            title: task.title,
-                                            time: viewModel.timeRange(for: task),
-                                            icon: task.icon,
-                                            color: viewModel.taskColor(task),
-                                            isCompleted: task.isCompleted,
-                                            durationMinutes: task.durationMinutes,
-                                            task: task,
-                                            timelineViewModel: viewModel
-                                        )
-                                        .onTapGesture {
-                                            withAnimation(LiquidDesignSystem.Animation.smooth) {
-                                                selectedTaskForActions = task
-                                            }
-                                        }
-                                        .transition(.asymmetric(
-                                            insertion: .scale.combined(with: .opacity),
-                                            removal: .opacity
-                                        ))
-                                        
-                                        // Show break suggestions after this task
-                                        ForEach(viewModel.breakSuggestions.filter { $0.insertAfterTaskId == task.id }) { suggestion in
-                                            LiquidBreakSuggestionCard(
-                                                suggestion: suggestion,
-                                                onAccept: {
-                                                    withAnimation(LiquidDesignSystem.Animation.smooth) {
-                                                        viewModel.acceptBreakSuggestion(suggestion)
-                                                    }
-                                                },
-                                                onDismiss: {
-                                                    withAnimation(LiquidDesignSystem.Animation.smooth) {
-                                                        viewModel.dismissBreakSuggestion(suggestion)
-                                                    }
-                                                }
-                                            )
-                                        }
-                                    }
-                                    
-                                    // Add standalone suggestions after all tasks
-                                    ForEach(viewModel.breakSuggestions.filter { $0.insertAfterTaskId == nil }) { suggestion in
-                                        LiquidBreakSuggestionCard(
-                                            suggestion: suggestion,
-                                            onAccept: {
-                                                withAnimation(LiquidDesignSystem.Animation.smooth) {
-                                                    viewModel.acceptBreakSuggestion(suggestion)
-                                                }
-                                            },
-                                            onDismiss: {
-                                                withAnimation(LiquidDesignSystem.Animation.smooth) {
-                                                    viewModel.dismissBreakSuggestion(suggestion)
-                                                }
-                                            }
-                                        )
-                                    }
-                                }
-                                
-                                // Bottom padding to prevent content from hiding behind FAB
-                                Spacer()
-                                    .frame(height: 100)
-                            }
-                            .padding(.horizontal, LiquidDesignSystem.Spacing.md)
-                        }
-                        .refreshable {
-                            await withAnimation(LiquidDesignSystem.Animation.smooth) {
-                                viewModel.forceRefreshTasks(for: selectedDate)
-                            }
-                        }
-                    }
-                }
-                
-                // Liquid Floating Action Button - Fixed position
-                VStack {
-                    Spacer()
-                    
-                    HStack {
-                        Spacer()
-                        
-                        LiquidFloatingActionButton {
-                            handleAddTaskButtonTap()
-                        }
-                        .padding(.trailing, LiquidDesignSystem.Spacing.lg)
-                        .padding(.bottom, LiquidDesignSystem.Spacing.lg)
-                    }
-                }
-            }
+            mainContentView
         }
         .navigationBarHidden(true)
         .onAppear {
@@ -209,13 +96,171 @@ struct LiquidTimelineView: View {
         }
         .alert(NSLocalizedString("enable_notifications", comment: "Enable notifications alert title"), isPresented: $showNotificationAlert) {
             Button(NSLocalizedString("enable", comment: "Enable button text")) {
-                Task {
+                _Concurrency.Task {
                     await viewModel.requestNotificationPermission()
                 }
             }
             Button(NSLocalizedString("later", comment: "Later button text"), role: .cancel) { }
         } message: {
             Text(NSLocalizedString("enable_notifications_message", comment: "Enable notifications message"))
+        }
+    }
+    
+    // MARK: - Main Content
+    
+    private var mainContentView: some View {
+        ZStack {
+            backgroundView
+            contentStackView
+            floatingActionButtonView
+        }
+    }
+    
+    private var backgroundView: some View {
+        LiquidDesignSystem.Gradients.meshBackground(colorScheme)
+            .ignoresSafeArea()
+    }
+    
+    private var contentStackView: some View {
+        VStack(spacing: LiquidDesignSystem.Spacing.lg) {
+            notificationBannerView
+            dateHeaderView
+            taskScrollView
+        }
+    }
+    
+    private var notificationBannerView: some View {
+        Group {
+            if !notificationService.isAuthorized {
+                notificationPermissionBanner
+                    .padding(.horizontal, LiquidDesignSystem.Spacing.md)
+                    .transition(.move(edge: .top).combined(with: .opacity))
+            }
+        }
+    }
+    
+    private var dateHeaderView: some View {
+        WeekDateNavigator(selectedDate: $selectedDate)
+            .padding(.horizontal, LiquidDesignSystem.Spacing.md)
+    }
+    
+    private var taskScrollView: some View {
+        ScrollViewReader { proxy in
+            ScrollView(.vertical, showsIndicators: false) {
+                taskListView
+            }
+            .refreshable {
+                await withAnimation(LiquidDesignSystem.Animation.smooth) {
+                    viewModel.forceRefreshTasks(for: selectedDate)
+                }
+            }
+        }
+    }
+    
+    private var taskListView: some View {
+        LazyVStack(spacing: LiquidDesignSystem.Spacing.md) {
+            if viewModel.tasks.isEmpty {
+                emptyStateView
+                    .padding(.top, LiquidDesignSystem.Spacing.xxl)
+            } else {
+                tasksAndSuggestionsView
+            }
+            
+            Spacer()
+                .frame(height: 100)
+        }
+        .padding(.horizontal, LiquidDesignSystem.Spacing.md)
+    }
+    
+    private var tasksAndSuggestionsView: some View {
+        VStack(spacing: LiquidDesignSystem.Spacing.md) {
+            ForEach(Array(viewModel.tasks.enumerated()), id: \.element.id) { index, task in
+                VStack(spacing: LiquidDesignSystem.Spacing.md) {
+                    taskCardView(for: task)
+                    breakSuggestionsView(for: task)
+                }
+            }
+            
+            // Add standalone suggestions after all tasks
+            standaloneBreakSuggestionsView
+        }
+    }
+    
+    private var standaloneBreakSuggestionsView: some View {
+        ForEach(viewModel.breakSuggestions.filter { $0.insertAfterTaskId == nil }) { suggestion in
+            standaloneBreakSuggestionView(suggestion)
+        }
+    }
+    
+    private func taskCardView(for task: Task) -> some View {
+        LiquidTaskCard(
+            title: task.title,
+            time: viewModel.timeRange(for: task),
+            icon: task.icon,
+            color: viewModel.taskColor(task),
+            isCompleted: task.isCompleted,
+            durationMinutes: task.durationMinutes,
+            task: task,
+            timelineViewModel: viewModel
+        )
+        .onTapGesture {
+            withAnimation(LiquidDesignSystem.Animation.smooth) {
+                selectedTaskForActions = task
+            }
+        }
+        .transition(.asymmetric(
+            insertion: .scale.combined(with: .opacity),
+            removal: .opacity
+        ))
+    }
+    
+    private func breakSuggestionsView(for task: Task) -> some View {
+        ForEach(viewModel.breakSuggestions.filter { $0.insertAfterTaskId == task.id }) { suggestion in
+            LiquidBreakSuggestionCard(
+                suggestion: suggestion,
+                onAccept: {
+                    withAnimation(LiquidDesignSystem.Animation.smooth) {
+                        viewModel.acceptBreakSuggestion(suggestion)
+                    }
+                },
+                onDismiss: {
+                    withAnimation(LiquidDesignSystem.Animation.smooth) {
+                        viewModel.dismissBreakSuggestion(suggestion)
+                    }
+                }
+            )
+        }
+    }
+    
+    private func standaloneBreakSuggestionView(_ suggestion: BreakSuggestion) -> some View {
+        LiquidBreakSuggestionCard(
+            suggestion: suggestion,
+            onAccept: {
+                withAnimation(LiquidDesignSystem.Animation.smooth) {
+                    viewModel.acceptBreakSuggestion(suggestion)
+                }
+            },
+            onDismiss: {
+                withAnimation(LiquidDesignSystem.Animation.smooth) {
+                    viewModel.dismissBreakSuggestion(suggestion)
+                }
+            }
+        )
+    }
+    
+    private var floatingActionButtonView: some View {
+        VStack {
+            Spacer()
+            
+            HStack {
+                Spacer()
+                
+                LiquidFloatingActionButton {
+                    handleAddTaskButtonTap()
+                }
+                .padding(.trailing, LiquidDesignSystem.Spacing.lg)
+                .padding(.bottom, LiquidDesignSystem.Spacing.lg)
+            }
         }
     }
     
@@ -372,6 +417,8 @@ struct LiquidTimelineView: View {
         }
     }
 }
+
+
 
 // MARK: - Liquid Break Suggestion Card
 
