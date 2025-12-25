@@ -389,12 +389,4 @@ struct LiquidStatusBadge: View {
     }
 }
 
-// MARK: - Preview
-
-#Preview("Liquid Live Activity", as: .content, using: FocusZoneWidgetAttributes.preview) {
-   LiquidFocusZoneWidgetLiveActivity()
-} contentStates: {
-    FocusZoneWidgetAttributes.ContentState.focus
-    FocusZoneWidgetAttributes.ContentState.breakTime
-}
 
