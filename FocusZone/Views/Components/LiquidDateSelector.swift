@@ -10,7 +10,7 @@ struct LiquidDateSelector: View {
             displayedComponents: [.date]
         )
         .datePickerStyle(.graphical)
-        .tint(LiquidDesignSystem.Colors.accent)
+        .tint(LiquidDesignSystem.Colors.primary)
         .padding(LiquidDesignSystem.Spacing.lg)
         .glassSurface()
     }
@@ -19,6 +19,6 @@ struct LiquidDateSelector: View {
 #Preview {
     LiquidDateSelector(selectedDate: .constant(Date()))
         .padding()
-        .background(LiquidDesignSystem.Colors.meshGradientBackground)
+        .background(LiquidDesignSystem.Gradients.meshBackground(.light))
 }
 
