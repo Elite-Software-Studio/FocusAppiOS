@@ -11,7 +11,7 @@ struct MainAppView: View {
             if showMainApp {
                 // Show main app after splash screen
                 if hasSeenOnboarding {
-                    MainTabView()
+                    LiquidMainTabView()
                 } else {
                     OnboardingView()
                 }
