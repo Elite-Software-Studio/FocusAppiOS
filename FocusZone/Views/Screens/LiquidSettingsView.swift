@@ -22,7 +22,7 @@ struct LiquidSettingsView: View {
                                 .foregroundStyle(LiquidDesignSystem.Colors.textPrimary)
                             
                             Text("Customize your focus experience")
-                                .font(LiquidDesignSystem.Typography.body)
+                                .font(LiquidDesignSystem.Typography.bodyFont)
                                 .foregroundStyle(LiquidDesignSystem.Colors.textSecondary)
                         }
                         .padding(.top, LiquidDesignSystem.Spacing.xl)
@@ -35,7 +35,7 @@ struct LiquidSettingsView: View {
                                 items: [
                                     SettingItem(icon: "bell.fill", title: "Notifications", subtitle: "Manage alerts"),
                                     SettingItem(icon: "moon.fill", title: "Focus Mode", subtitle: "Do Not Disturb"),
-                                    SettingItem(icon: "globe", title: "Language", subtitle: languageManager.currentLanguage.rawValue.uppercased())
+                                    SettingItem(icon: "globe", title: "Language", subtitle: languageManager.currentLanguage.uppercased())
                                 ]
                             )
                             
@@ -111,7 +111,7 @@ struct LiquidSettingsView: View {
                 // Text
                 VStack(alignment: .leading, spacing: 2) {
                     Text(item.title)
-                        .font(LiquidDesignSystem.Typography.body)
+                        .font(LiquidDesignSystem.Typography.bodyFont)
                         .foregroundStyle(LiquidDesignSystem.Colors.textPrimary)
                     
                     if let subtitle = item.subtitle {

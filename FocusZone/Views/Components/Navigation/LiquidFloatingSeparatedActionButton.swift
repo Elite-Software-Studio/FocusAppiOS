@@ -78,7 +78,7 @@ struct LiquidFloatingSeparatedActionButton: View {
             x: 0,
             y: isPressed ? 8 : 12
         )
-        .animation(LiquidDesignSystem.Animation.quickSpring, value: isPressed)
+        .animation(LiquidDesignSystem.Animation.quick, value: isPressed)
     }
 }
 

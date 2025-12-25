@@ -41,26 +41,24 @@ struct LiquidMainTabView: View {
             VStack {
                 Spacer()
                 
-                ZStack(alignment: .bottom) {
-                    // Floating Action Button (positioned above tab bar)
-                    VStack {
-                        Spacer()
-                        
-                        LiquidFloatingSeparatedActionButton(
-                            icon: "plus",
-                            size: 64
-                        ) {
-                            showAddTaskForm = true
-                        }
-                        .offset(y: -25) // Float above the tab bar
-                    }
-                    
-                    // Custom Tab Bar
+                // Horizontal layout: Tab Bar + FAB aligned
+                HStack(spacing: LiquidDesignSystem.Spacing.md) {
+                    // Custom Tab Bar (takes most space)
                     LiquidTabBar(
                         selectedTab: $selectedTab,
                         tabs: tabs
                     )
+                    
+                    // Floating Action Button (aligned at same level)
+                    LiquidFloatingSeparatedActionButton(
+                        icon: "plus",
+                        size: 56
+                    ) {
+                        showAddTaskForm = true
+                    }
+                    .padding(.trailing, LiquidDesignSystem.Spacing.lg)
                 }
+                .padding(.bottom, LiquidDesignSystem.Spacing.sm)
             }
             .ignoresSafeArea(.keyboard)
         }

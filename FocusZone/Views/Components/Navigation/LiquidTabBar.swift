@@ -41,8 +41,7 @@ struct LiquidTabBar: View {
             x: 0,
             y: 10
         )
-        .padding(.horizontal, LiquidDesignSystem.Spacing.xl)
-        .padding(.bottom, LiquidDesignSystem.Spacing.sm)
+        .padding(.leading, LiquidDesignSystem.Spacing.lg)
     }
 }
 
