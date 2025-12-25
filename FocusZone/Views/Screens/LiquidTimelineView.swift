@@ -1,9 +1,6 @@
 import SwiftUI
 import SwiftData
 
-// Create an alias to avoid conflict with Swift's Task
-typealias FocusTask = Task
-
 struct LiquidTimelineView: View {
     @Environment(\.colorScheme) var colorScheme
     @StateObject private var viewModel = TimelineViewModel()
@@ -12,8 +9,8 @@ struct LiquidTimelineView: View {
     @Environment(\.modelContext) private var modelContext
     @State private var selectedDate: Date = Date()
     @State private var showAddTaskForm = false
-    @State private var editingTask: FocusTask?
-    @State private var selectedTaskForActions: FocusTask?
+    @State private var editingTask: Task?
+    @State private var selectedTaskForActions: Task?
     @State private var showNotificationAlert = false
     @State private var showProGate = false
     @State private var showPaywall = false
@@ -212,7 +209,7 @@ struct LiquidTimelineView: View {
         }
         .alert(NSLocalizedString("enable_notifications", comment: "Enable notifications alert title"), isPresented: $showNotificationAlert) {
             Button(NSLocalizedString("enable", comment: "Enable button text")) {
-                _Concurrency.Task {
+                Task {
                     await viewModel.requestNotificationPermission()
                 }
             }
@@ -304,7 +301,7 @@ struct LiquidTimelineView: View {
     
     // MARK: - Helper Methods
     
-    private func handleTaskDeletion(_ task: FocusTask, type: TaskActionsModal.DeletionType) {
+    private func handleTaskDeletion(_ task: Task, type: TaskActionsModal.DeletionType) {
         withAnimation(LiquidDesignSystem.Animation.smooth) {
             switch type {
             case .instance:
@@ -334,31 +331,31 @@ struct LiquidTimelineView: View {
     
     // MARK: - Task Actions
     
-    private func deleteTask(_ task: FocusTask) {
+    private func deleteTask(_ task: Task) {
         withAnimation(LiquidDesignSystem.Animation.smooth) {
             viewModel.deleteTask(task)
         }
         selectedTaskForActions = nil
     }
     
-    private func duplicateTask(_ task: FocusTask) {
+    private func duplicateTask(_ task: Task) {
         viewModel.duplicateTask(task)
         selectedTaskForActions = nil
     }
     
-    private func completeTask(_ task: FocusTask) {
+    private func completeTask(_ task: Task) {
         withAnimation(LiquidDesignSystem.Animation.smooth) {
             viewModel.completeTask(task)
         }
         selectedTaskForActions = nil
     }
     
-    private func editTask(_ task: FocusTask) {
+    private func editTask(_ task: Task) {
         selectedTaskForActions = nil
         editingTask = task
     }
     
-    private func startTask(_ task: FocusTask) {
+    private func startTask(_ task: Task) {
         timerService.startTask(task)
         selectedTaskForActions = nil
     }
