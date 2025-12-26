@@ -23,19 +23,15 @@ struct LiquidMainTabView: View {
             Group {
                 switch selectedTab {
                 case 0:
-                    LiquidTimelineView()
-                        .transition(.opacity.combined(with: .scale(scale: 0.95)))
+                    TimelineView()
                 case 1:
                     FocusInsightsView()
-                        .transition(.opacity.combined(with: .scale(scale: 0.95)))
                 case 2:
-                    LiquidSettingsView()
-                        .transition(.opacity.combined(with: .scale(scale: 0.95)))
+                    SettingsView()
                 default:
-                    LiquidTimelineView()
+                    TimelineView()
                 }
             }
-            .animation(LiquidDesignSystem.Animation.smooth, value: selectedTab)
             
             // Bottom navigation container
             VStack {

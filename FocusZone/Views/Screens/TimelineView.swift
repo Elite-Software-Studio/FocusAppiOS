@@ -128,19 +128,19 @@ struct TimelineView: View {
                 }
                 
                 // Floating Action Button - Fixed position
-                VStack {
-                    Spacer()
-                    
-                    HStack {
-                        Spacer()
-                        
-                        FloatingActionButton {
-                            handleAddTaskButtonTap()
-                        }
-                        .padding(.trailing, 20)
-                        .padding(.bottom, 20)
-                    }
-                }
+                // VStack {
+                //     Spacer()
+                //     
+                //     HStack {
+                //         Spacer()
+                //         
+                //         FloatingActionButton {
+                //             handleAddTaskButtonTap()
+                //         }
+                //         .padding(.trailing, 20)
+                //         .padding(.bottom, 20)
+                //     }
+                // }
             }
             
 
