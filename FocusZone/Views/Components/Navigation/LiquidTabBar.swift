@@ -25,21 +25,59 @@ struct LiquidTabBar: View {
         .padding(.horizontal, LiquidDesignSystem.Spacing.md)
         .padding(.vertical, LiquidDesignSystem.Spacing.sm)
         .background(
-            Capsule()
-                .fill(LiquidDesignSystem.Colors.glassBackground)
+            ZStack {
+                // True glass material with real blur
+                Capsule()
+                    .fill(.ultraThinMaterial)
+                
+                // Subtle tint overlay
+                Capsule()
+                    .fill(
+                        colorScheme == .dark
+                            ? Color.white.opacity(0.05)
+                            : Color.white.opacity(0.3)
+                    )
+                
+                // Light reflection highlight
+                Capsule()
+                    .fill(
+                        LinearGradient(
+                            colors: [
+                                Color.white.opacity(0.2),
+                                Color.clear
+                            ],
+                            startPoint: .top,
+                            endPoint: .center
+                        )
+                    )
+            }
         )
         .overlay(
+            // Glassy border
             Capsule()
                 .strokeBorder(
-                    LiquidDesignSystem.Colors.surface.opacity(0.2),
-                    lineWidth: 1
+                    LinearGradient(
+                        colors: [
+                            Color.white.opacity(colorScheme == .dark ? 0.3 : 0.5),
+                            Color.white.opacity(colorScheme == .dark ? 0.1 : 0.2)
+                        ],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    ),
+                    lineWidth: 1.5
                 )
         )
         .shadow(
-            color: Color.black.opacity(colorScheme == .dark ? 0.4 : 0.1),
-            radius: 20,
+            color: Color.black.opacity(colorScheme == .dark ? 0.5 : 0.15),
+            radius: 25,
             x: 0,
-            y: 10
+            y: 12
+        )
+        .shadow(
+            color: LiquidDesignSystem.Colors.primary.opacity(0.1),
+            radius: 15,
+            x: 0,
+            y: 5
         )
         .padding(.leading, LiquidDesignSystem.Spacing.lg)
     }
@@ -125,4 +163,5 @@ struct TabItem: Identifiable {
     }
     .background(LiquidDesignSystem.Gradients.meshBackground(.light))
 }
+
 
