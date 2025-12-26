@@ -93,7 +93,12 @@ class ScheduledTaskLiveActivityService: ObservableObject {
         )
         
         do {
-            let tasksToStart = try modelContext.fetch(descriptor)
+            // filter by incoming tasks and not completed for the current day
+            let tasksToStart = try modelContext.fetch(descriptor).filter { task in
+                let now = Date()
+                let calendar = Calendar.current
+                return task.startTime <= now && !task.isCompleted && calendar.isDate(task.startTime, inSameDayAs: now)
+            }
             print("📋 ScheduledTaskLiveActivityService: Found \(tasksToStart.count) tasks that should be active")
             
             for task in tasksToStart {
