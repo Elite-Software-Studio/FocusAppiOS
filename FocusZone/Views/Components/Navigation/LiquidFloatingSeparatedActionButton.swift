@@ -36,13 +36,13 @@ struct LiquidFloatingSeparatedActionButton: View {
             }
         }) {
             ZStack {
-                // Outer glow halo
+                // Outer glow halo (lighter)
                 Circle()
                     .fill(
                         RadialGradient(
                             colors: [
-                                LiquidDesignSystem.Colors.primary.opacity(0.4),
-                                LiquidDesignSystem.Colors.primary.opacity(0.1),
+                                LiquidDesignSystem.Colors.primary.opacity(0.3),
+                                LiquidDesignSystem.Colors.primary.opacity(0.08),
                                 Color.clear
                             ],
                             center: .center,
@@ -51,21 +51,21 @@ struct LiquidFloatingSeparatedActionButton: View {
                         )
                     )
                     .frame(width: size + 16, height: size + 16)
-                    .blur(radius: 12)
+                    .blur(radius: 10)
                     .opacity(isPressed ? 0.7 : 1.0)
                 
-                // Base glass surface with real material
+                // Base glass surface with lighter material
                 Circle()
-                    .fill(.regularMaterial)
+                    .fill(.thinMaterial)
                     .frame(width: size, height: size)
                 
-                // Colored tint layer
+                // Colored tint layer (more transparent)
                 Circle()
                     .fill(
                         RadialGradient(
                             colors: [
-                                LiquidDesignSystem.Colors.primary.opacity(0.9),
-                                LiquidDesignSystem.Colors.primary.opacity(0.7)
+                                LiquidDesignSystem.Colors.primary.opacity(0.85),
+                                LiquidDesignSystem.Colors.primary.opacity(0.6)
                             ],
                             center: .center,
                             startRadius: 0,
@@ -74,13 +74,13 @@ struct LiquidFloatingSeparatedActionButton: View {
                     )
                     .frame(width: size, height: size)
                 
-                // Glass highlight (top-left shine)
+                // Glass highlight (top-left shine, lighter)
                 Circle()
                     .fill(
                         RadialGradient(
                             colors: [
-                                Color.white.opacity(0.5),
-                                Color.white.opacity(0.2),
+                                Color.white.opacity(0.35),
+                                Color.white.opacity(0.15),
                                 Color.clear
                             ],
                             center: .init(x: 0.3, y: 0.3),
@@ -90,18 +90,18 @@ struct LiquidFloatingSeparatedActionButton: View {
                     )
                     .frame(width: size, height: size)
                 
-                // Subtle inner shadow for depth
+                // Subtle inner shadow for depth (lighter)
                 Circle()
                     .strokeBorder(
                         LinearGradient(
                             colors: [
-                                Color.white.opacity(0.4),
-                                Color.white.opacity(0.1)
+                                Color.white.opacity(0.3),
+                                Color.white.opacity(0.08)
                             ],
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing
                         ),
-                        lineWidth: 2
+                        lineWidth: 1.5
                     )
                     .frame(width: size - 2, height: size - 2)
                 
@@ -115,24 +115,24 @@ struct LiquidFloatingSeparatedActionButton: View {
         }
         .buttonStyle(PlainButtonStyle())
         .scaleEffect(isPressed ? 0.92 : 1.0)
-        // Primary colored shadow for glow
+        // Primary colored shadow for glow (lighter)
         .shadow(
-            color: LiquidDesignSystem.Colors.primary.opacity(colorScheme == .dark ? 0.7 : 0.5),
-            radius: isPressed ? 18 : 25,
+            color: LiquidDesignSystem.Colors.primary.opacity(colorScheme == .dark ? 0.5 : 0.35),
+            radius: isPressed ? 16 : 22,
             x: 0,
             y: isPressed ? 8 : 12
         )
-        // Dark shadow for depth
+        // Dark shadow for depth (lighter)
         .shadow(
-            color: Color.black.opacity(colorScheme == .dark ? 0.6 : 0.25),
-            radius: isPressed ? 12 : 20,
+            color: Color.black.opacity(colorScheme == .dark ? 0.5 : 0.18),
+            radius: isPressed ? 10 : 18,
             x: 0,
             y: isPressed ? 6 : 10
         )
-        // Subtle highlight shadow (from above)
+        // Subtle highlight shadow (from above, lighter)
         .shadow(
-            color: Color.white.opacity(colorScheme == .dark ? 0.05 : 0.1),
-            radius: 5,
+            color: Color.white.opacity(colorScheme == .dark ? 0.03 : 0.08),
+            radius: 4,
             x: 0,
             y: -2
         )

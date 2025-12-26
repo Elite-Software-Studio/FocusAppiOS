@@ -26,24 +26,24 @@ struct LiquidTabBar: View {
         .padding(.vertical, LiquidDesignSystem.Spacing.sm)
         .background(
             ZStack {
-                // True glass material with real blur
+                // True glass material with real blur (lightest option)
                 Capsule()
                     .fill(.ultraThinMaterial)
                 
-                // Subtle tint overlay
+                // Very subtle tint overlay (reduced for more transparency)
                 Capsule()
                     .fill(
                         colorScheme == .dark
-                            ? Color.white.opacity(0.05)
-                            : Color.white.opacity(0.3)
+                            ? Color.white.opacity(0.02)
+                            : Color.white.opacity(0.15)
                     )
                 
-                // Light reflection highlight
+                // Light reflection highlight (reduced)
                 Capsule()
                     .fill(
                         LinearGradient(
                             colors: [
-                                Color.white.opacity(0.2),
+                                Color.white.opacity(0.1),
                                 Color.clear
                             ],
                             startPoint: .top,
@@ -53,31 +53,31 @@ struct LiquidTabBar: View {
             }
         )
         .overlay(
-            // Glassy border
+            // Glassy border (lighter)
             Capsule()
                 .strokeBorder(
                     LinearGradient(
                         colors: [
-                            Color.white.opacity(colorScheme == .dark ? 0.3 : 0.5),
-                            Color.white.opacity(colorScheme == .dark ? 0.1 : 0.2)
+                            Color.white.opacity(colorScheme == .dark ? 0.2 : 0.3),
+                            Color.white.opacity(colorScheme == .dark ? 0.05 : 0.1)
                         ],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     ),
-                    lineWidth: 1.5
+                    lineWidth: 1
                 )
         )
         .shadow(
-            color: Color.black.opacity(colorScheme == .dark ? 0.5 : 0.15),
-            radius: 25,
+            color: Color.black.opacity(colorScheme == .dark ? 0.4 : 0.1),
+            radius: 20,
             x: 0,
-            y: 12
+            y: 10
         )
         .shadow(
-            color: LiquidDesignSystem.Colors.primary.opacity(0.1),
-            radius: 15,
+            color: LiquidDesignSystem.Colors.primary.opacity(0.08),
+            radius: 12,
             x: 0,
-            y: 5
+            y: 4
         )
         .padding(.leading, LiquidDesignSystem.Spacing.lg)
     }
