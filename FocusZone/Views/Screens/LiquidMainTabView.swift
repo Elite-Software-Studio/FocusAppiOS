@@ -12,9 +12,9 @@ struct LiquidMainTabView: View {
     
     // Tab configuration
     private let tabs: [TabItem] = [
-        TabItem(title: NSLocalizedString("timeline", comment: "Timeline tab"), icon: "calendar"),
-        TabItem(title: NSLocalizedString("insights", comment: "Insights tab"), icon: "brain.head.profile", badge: "PRO"),
-        TabItem(title: NSLocalizedString("settings", comment: "Settings tab"), icon: "gear")
+        TabItem(title: NSLocalizedString("timeline", comment: "Timeline tab"), icon: "calendar", selectedIcon: "calendar.circle.fill"),
+        TabItem(title: NSLocalizedString("insights", comment: "Insights tab"), icon: "brain.head.profile", selectedIcon: "brain.head.profile.fill", badge: "PRO"),
+        TabItem(title: NSLocalizedString("settings", comment: "Settings tab"), icon: "gear", selectedIcon: "gearshape.fill")
     ]
     
     var body: some View {
