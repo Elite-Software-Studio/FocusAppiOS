@@ -41,8 +41,8 @@ struct LiquidFloatingSeparatedActionButton: View {
                     .fill(
                         RadialGradient(
                             colors: [
-                                LiquidDesignSystem.Colors.primary.opacity(0.3),
-                                LiquidDesignSystem.Colors.primary.opacity(0.08),
+                                LiquidDesignSystem.Colors.primary.opacity(0.11),
+                                LiquidDesignSystem.Colors.primary.opacity(0.03),
                                 Color.clear
                             ],
                             center: .center,
@@ -51,7 +51,7 @@ struct LiquidFloatingSeparatedActionButton: View {
                         )
                     )
                     .frame(width: size + 16, height: size + 16)
-                    .blur(radius: 10)
+                    .blur(radius: 110)
                     .opacity(isPressed ? 0.7 : 1.0)
                 
                 // Base glass surface with lighter material
@@ -64,12 +64,12 @@ struct LiquidFloatingSeparatedActionButton: View {
                     .fill(
                         RadialGradient(
                             colors: [
-                                LiquidDesignSystem.Colors.primary.opacity(0.85),
-                                LiquidDesignSystem.Colors.primary.opacity(0.6)
+                                LiquidDesignSystem.Colors.primary.opacity(0.5),
+                                LiquidDesignSystem.Colors.primary.opacity(0.2)
                             ],
                             center: .center,
                             startRadius: 0,
-                            endRadius: size * 0.5
+                            endRadius: size * 0.9
                         )
                     )
                     .frame(width: size, height: size)
@@ -105,37 +105,14 @@ struct LiquidFloatingSeparatedActionButton: View {
                     )
                     .frame(width: size - 2, height: size - 2)
                 
-                // Icon with enhanced shadow
+                // Icon (no shadow)
                 Image(systemName: icon)
                     .font(.system(size: size * 0.4, weight: .semibold))
                     .foregroundColor(.white)
-                    .shadow(color: .black.opacity(0.3), radius: 3, x: 0, y: 2)
-                    .shadow(color: LiquidDesignSystem.Colors.primary.opacity(0.5), radius: 8, x: 0, y: 0)
             }
         }
         .buttonStyle(PlainButtonStyle())
         .scaleEffect(isPressed ? 0.92 : 1.0)
-        // Primary colored shadow for glow (lighter)
-        .shadow(
-            color: LiquidDesignSystem.Colors.primary.opacity(colorScheme == .dark ? 0.5 : 0.35),
-            radius: isPressed ? 16 : 22,
-            x: 0,
-            y: isPressed ? 8 : 12
-        )
-        // Dark shadow for depth (lighter)
-        .shadow(
-            color: Color.black.opacity(colorScheme == .dark ? 0.5 : 0.18),
-            radius: isPressed ? 10 : 18,
-            x: 0,
-            y: isPressed ? 6 : 10
-        )
-        // Subtle highlight shadow (from above, lighter)
-        .shadow(
-            color: Color.white.opacity(colorScheme == .dark ? 0.03 : 0.08),
-            radius: 4,
-            x: 0,
-            y: -2
-        )
         .animation(LiquidDesignSystem.Animation.quick, value: isPressed)
     }
 }
