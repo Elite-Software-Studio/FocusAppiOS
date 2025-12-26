@@ -63,7 +63,7 @@ struct LiquidMainTabView: View {
             // Refresh timeline after adding task
             NotificationCenter.default.post(name: NSNotification.Name("RefreshTimeline"), object: nil)
         }) {
-            LiquidTaskFormView()
+            TaskFormView()
                 .environment(\.modelContext, modelContext)
         }
     }
