@@ -27,7 +27,8 @@ struct FocusZoneApp: App {
     @StateObject private var cloudSyncManager = CloudSyncManager()
     @StateObject private var languageManager = LanguageManager.shared
 
-    // CloudKit-backed container (Task only)
+    /// Task container: unchanged from original app. Task-only, CloudKit-backed.
+    /// Do not add other models here; use a separate container (e.g. inbox) to avoid load/schema issues.
     let modelContainer: ModelContainer = {
         do {
             let configuration = ModelConfiguration(cloudKitDatabase: .automatic)
@@ -37,7 +38,7 @@ struct FocusZoneApp: App {
         }
     }()
 
-    // Local-only container for Inbox (QuickNote) — not synced to CloudKit
+    /// Inbox (QuickNote) container: separate from Task, local-only. Does not share store or schema with Task.
     let inboxModelContainer: ModelContainer = {
         do {
             let configuration = ModelConfiguration(cloudKitDatabase: .none)

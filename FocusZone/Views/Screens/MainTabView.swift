@@ -8,7 +8,7 @@ struct MainTabView: View {
     
     var body: some View {
         TabView(selection: $selectedTab) {
-            TimelineView()
+            TimelineView(selectedTab: $selectedTab)
                 .tabItem {
                     Label(NSLocalizedString("timeline", comment: "Timeline tab label"), systemImage: "calendar")
                 }

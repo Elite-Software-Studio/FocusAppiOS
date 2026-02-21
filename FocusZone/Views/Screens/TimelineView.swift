@@ -5,6 +5,7 @@ import SwiftData
 typealias FocusTask = Task
 
 struct TimelineView: View {
+    @Binding var selectedTab: Int
     @StateObject private var viewModel = TimelineViewModel()
     @ObservedObject private var timerService = TaskTimerService.shared
     @EnvironmentObject var notificationService: NotificationService
@@ -106,12 +107,6 @@ struct TimelineView: View {
                                         .padding(.vertical, 4)
                                     }
                                     
-                                    // And add this to the onChange modifier for selectedDate:
-                                    .onChange(of: selectedDate) { _, newDate in
-                                        viewModel.loadTodayTasks(for: newDate)
-                                        viewModel.updateBreakSuggestions() // Add this line
-                                    }
-                                    
                                 }
                                 
                                 // Bottom padding to prevent content from hiding behind FAB
@@ -155,7 +150,11 @@ struct TimelineView: View {
         .onChange(of: selectedDate) { _, newDate in
             viewModel.loadTodayTasks(for: newDate)
             viewModel.refreshTasksWithBreakSuggestions(for: newDate)
-            
+        }
+        .onChange(of: selectedTab) { _, newValue in
+            if newValue == 0 {
+                viewModel.forceRefreshTasks(for: selectedDate)
+            }
         }
         .sheet(isPresented: $showAddTaskForm, onDismiss: {
             // Refresh timeline after creating a task with a small delay to ensure data is saved
@@ -293,9 +292,9 @@ struct TimelineView: View {
     private func setupViewModels() {
         viewModel.setModelContext(modelContext)
         timerService.setModelContext(modelContext)
-        viewModel.loadTodayTasks(for: selectedDate)
-        viewModel.refreshTasksWithBreakSuggestions(for: selectedDate) // Changed this line
-        
+        viewModel.forceRefreshTasks(for: selectedDate)
+        viewModel.refreshTasksWithBreakSuggestions(for: selectedDate)
+
         // Show notification permission alert if not authorized
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             if !notificationService.isAuthorized {

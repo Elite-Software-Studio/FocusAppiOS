@@ -9,6 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct InboxView: View {
+    @Environment(\.modelContext) private var modelContext
     @Environment(\.inboxModelContext) private var inboxContext
 
     @State private var notes: [QuickNote] = []
@@ -37,6 +38,7 @@ struct InboxView: View {
             .navigationBarTitleDisplayMode(.large)
             .fullScreenCover(isPresented: $showTaskForm) {
                 TaskFormView(initialTitle: initialTitleForForm)
+                    .environment(\.modelContext, modelContext)
             }
             .onAppear { fetchNotes() }
             .onChange(of: showTaskForm) { _, isShowing in
