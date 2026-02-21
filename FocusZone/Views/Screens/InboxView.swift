@@ -24,17 +24,17 @@ struct InboxView: View {
                     .ignoresSafeArea()
 
                 VStack(spacing: 0) {
-                    addNoteSection
+                    captureCard
 
                     if notes.isEmpty {
                         emptyState
                     } else {
-                        notesList
+                        notesSection
                     }
                 }
             }
             .navigationTitle(NSLocalizedString("inbox", comment: "Inbox screen title"))
-            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarTitleDisplayMode(.large)
             .fullScreenCover(isPresented: $showTaskForm) {
                 TaskFormView(initialTitle: initialTitleForForm)
             }
@@ -55,68 +55,130 @@ struct InboxView: View {
         }
     }
 
-    private var addNoteSection: some View {
-        HStack(spacing: 12) {
-            TextField(NSLocalizedString("quick_note_placeholder", comment: "Quick note input placeholder"), text: $newNoteText)
-                .font(AppFonts.body())
-                .padding(.horizontal, 16)
-                .padding(.vertical, 12)
-                .background(AppColors.card)
-                .foregroundColor(AppColors.textPrimary)
-                .cornerRadius(12)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 12)
-                        .stroke(AppColors.textSecondary.opacity(0.3), lineWidth: 1)
-                )
-                .focused($isInputFocused)
-                .submitLabel(.done)
-                .onSubmit { addNote() }
-
-            Button(action: { addNote() }) {
-                Image(systemName: "plus.circle.fill")
-                    .font(.system(size: 32))
+    // MARK: - Capture card
+    private var captureCard: some View {
+        VStack(spacing: 0) {
+            HStack(alignment: .top, spacing: 12) {
+                Image(systemName: "square.and.pencil")
+                    .font(.system(size: 20, weight: .medium))
                     .foregroundColor(AppColors.accent)
-            }
-            .disabled(newNoteText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
-        }
-        .padding(.horizontal, 20)
-        .padding(.vertical, 16)
-        .background(AppColors.background)
-    }
 
-    private var emptyState: some View {
-        VStack(spacing: 16) {
-            Image(systemName: "tray")
-                .font(.system(size: 48))
-                .foregroundColor(AppColors.textSecondary)
+                VStack(alignment: .leading, spacing: 12) {
+                    TextField(NSLocalizedString("quick_note_placeholder", comment: "Quick note input placeholder"), text: $newNoteText, axis: .vertical)
+                        .font(AppFonts.body())
+                        .foregroundColor(AppColors.textPrimary)
+                        .lineLimit(1...6)
+                        .focused($isInputFocused)
+                        .submitLabel(.done)
+                        .onSubmit { addNote() }
 
-            Text(NSLocalizedString("inbox_empty_title", comment: "Inbox empty state title"))
-                .font(AppFonts.headline())
-                .foregroundColor(AppColors.textSecondary)
-                .multilineTextAlignment(.center)
+                    HStack {
+                        Text(NSLocalizedString("inbox_capture_hint", comment: "Hint under input"))
+                            .font(AppFonts.caption())
+                            .foregroundColor(AppColors.textSecondary)
 
-            Text(NSLocalizedString("inbox_empty_subtitle", comment: "Inbox empty state subtitle"))
-                .font(AppFonts.body())
-                .foregroundColor(AppColors.textSecondary)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, 32)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
+                        Spacer()
 
-    private var notesList: some View {
-        ScrollView {
-            LazyVStack(spacing: 0) {
-                ForEach(notes, id: \.id) { note in
-                    InboxNoteRow(
-                        note: note,
-                        onConvertToTask: { convertToTask(note) },
-                        onDelete: { deleteNote(note) }
-                    )
+                        Button(action: { addNote() }) {
+                            HStack(spacing: 6) {
+                                Image(systemName: "plus")
+                                    .font(.system(size: 14, weight: .semibold))
+                                Text(NSLocalizedString("add_note", comment: "Add note button"))
+                                    .font(AppFonts.subheadline())
+                            }
+                            .foregroundColor(canAddNote ? .white : AppColors.textSecondary)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 10)
+                            .background(
+                                Capsule()
+                                    .fill(canAddNote ? AppColors.accent : AppColors.textSecondary.opacity(0.2))
+                            )
+                        }
+                        .disabled(!canAddNote)
+                        .buttonStyle(.plain)
+                    }
                 }
             }
+            .padding(20)
+            .background(
+                RoundedRectangle(cornerRadius: 16)
+                    .fill(AppColors.card)
+                    .shadow(color: Color.black.opacity(0.06), radius: 8, x: 0, y: 2)
+            )
+        }
+        .padding(.horizontal, 20)
+        .padding(.top, 8)
+        .padding(.bottom, 24)
+    }
+
+    private var canAddNote: Bool {
+        !newNoteText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+
+    // MARK: - Empty state
+    private var emptyState: some View {
+        VStack(spacing: 24) {
+            Spacer()
+
+            ZStack {
+                Circle()
+                    .fill(AppColors.accent.opacity(0.12))
+                    .frame(width: 88, height: 88)
+                Image(systemName: "tray")
+                    .font(.system(size: 36, weight: .medium))
+                    .foregroundColor(AppColors.accent)
+            }
+
+            VStack(spacing: 8) {
+                Text(NSLocalizedString("inbox_empty_title", comment: "Inbox empty state title"))
+                    .font(AppFonts.title())
+                    .foregroundColor(AppColors.textPrimary)
+                    .multilineTextAlignment(.center)
+
+                Text(NSLocalizedString("inbox_empty_subtitle", comment: "Inbox empty state subtitle"))
+                    .font(AppFonts.body())
+                    .foregroundColor(AppColors.textSecondary)
+                    .multilineTextAlignment(.center)
+                    .lineSpacing(4)
+            }
+            .padding(.horizontal, 40)
+
+            Spacer()
+        }
+    }
+
+    // MARK: - Notes list with section header
+    private var notesSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Text(NSLocalizedString("quick_notes", comment: "Section title for notes list"))
+                    .font(AppFonts.subheadline())
+                    .fontWeight(.semibold)
+                    .foregroundColor(AppColors.textSecondary)
+
+                Text("\(notes.count)")
+                    .font(AppFonts.caption())
+                    .fontWeight(.medium)
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 2)
+                    .background(Capsule().fill(AppColors.accent))
+            }
             .padding(.horizontal, 20)
-            .padding(.bottom, 24)
+
+            ScrollView {
+                LazyVStack(spacing: 10) {
+                    ForEach(notes, id: \.id) { note in
+                        InboxNoteCard(
+                            note: note,
+                            onConvertToTask: { convertToTask(note) },
+                            onDelete: { deleteNote(note) }
+                        )
+                    }
+                }
+                .padding(.horizontal, 20)
+                .padding(.bottom, 32)
+            }
         }
     }
 
@@ -160,8 +222,8 @@ struct InboxView: View {
     }
 }
 
-// MARK: - Inbox note row
-struct InboxNoteRow: View {
+// MARK: - Inbox note card (redesigned)
+struct InboxNoteCard: View {
     let note: QuickNote
     let onConvertToTask: () -> Void
     let onDelete: () -> Void
@@ -169,46 +231,70 @@ struct InboxNoteRow: View {
     @State private var showDeleteConfirm: Bool = false
 
     var body: some View {
-        HStack(alignment: .top, spacing: 12) {
-            VStack(alignment: .leading, spacing: 4) {
+        HStack(alignment: .top, spacing: 0) {
+            RoundedRectangle(cornerRadius: 2)
+                .fill(AppColors.accent)
+                .frame(width: 4)
+                .padding(.top, 20)
+                .padding(.bottom, 20)
+
+            VStack(alignment: .leading, spacing: 10) {
                 Text(note.content)
                     .font(AppFonts.body())
                     .foregroundColor(AppColors.textPrimary)
                     .multilineTextAlignment(.leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
 
-                Text(note.createdAt, style: .relative)
-                    .font(AppFonts.caption())
-                    .foregroundColor(AppColors.textSecondary)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.vertical, 12)
-            .padding(.horizontal, 16)
-            .background(AppColors.card)
-            .cornerRadius(12)
+                HStack {
+                    Text(formattedDate(note.createdAt))
+                        .font(AppFonts.caption())
+                        .foregroundColor(AppColors.textSecondary)
 
-            VStack(spacing: 8) {
-                Button(action: onConvertToTask) {
-                    Image(systemName: "calendar.badge.plus")
-                        .font(.system(size: 18))
-                        .foregroundColor(AppColors.accent)
+                    Spacer()
+
+                    HStack(spacing: 12) {
+                        Button(action: onConvertToTask) {
+                            HStack(spacing: 6) {
+                                Image(systemName: "calendar.badge.plus")
+                                    .font(.system(size: 14))
+                                Text(NSLocalizedString("add_to_timeline", comment: "Convert to task button"))
+                                    .font(AppFonts.caption())
+                                    .fontWeight(.medium)
+                            }
+                            .foregroundColor(AppColors.accent)
+                        }
+                        .buttonStyle(.plain)
+
+                        Button(action: { showDeleteConfirm = true }) {
+                            Image(systemName: "trash")
+                                .font(.system(size: 14))
+                                .foregroundColor(AppColors.textSecondary)
+                        }
+                        .buttonStyle(.plain)
+                    }
                 }
-                .buttonStyle(.plain)
-
-                Button(action: { showDeleteConfirm = true }) {
-                    Image(systemName: "trash")
-                        .font(.system(size: 18))
-                        .foregroundColor(AppColors.danger)
-                }
-                .buttonStyle(.plain)
             }
+            .padding(.leading, 16)
+            .padding(.trailing, 16)
+            .padding(.vertical, 16)
         }
-        .padding(.vertical, 6)
+        .background(
+            RoundedRectangle(cornerRadius: 14)
+                .fill(AppColors.card)
+                .shadow(color: Color.black.opacity(0.05), radius: 6, x: 0, y: 1)
+        )
         .confirmationDialog(NSLocalizedString("delete_note", comment: "Delete note action"), isPresented: $showDeleteConfirm) {
             Button(NSLocalizedString("delete", comment: "Delete button"), role: .destructive, action: onDelete)
             Button(NSLocalizedString("cancel", comment: "Cancel button"), role: .cancel) {}
         } message: {
             Text(NSLocalizedString("delete_note_confirmation", comment: "Delete note confirmation message"))
         }
+    }
+
+    private func formattedDate(_ date: Date) -> String {
+        let formatter = RelativeDateTimeFormatter()
+        formatter.unitsStyle = .abbreviated
+        return formatter.localizedString(for: date, relativeTo: Date())
     }
 }
 

@@ -370,9 +370,13 @@
 "pro" = "PRO";
 
 // MARK: - Inbox / Quick Notes
-"quick_note_placeholder" = "Nota rápida...";
+"quick_note_placeholder" = "O que tem em mente?";
+"inbox_capture_hint" = "Transforme notas em tarefas mais tarde";
+"add_note" = "Adicionar nota";
+"quick_notes" = "Notas rápidas";
+"add_to_timeline" = "Adicionar ao planeamento";
 "inbox_empty_title" = "A sua entrada está vazia";
-"inbox_empty_subtitle" = "Adicione notas aqui e converta-as em tarefas quando quiser planear o dia.";
+"inbox_empty_subtitle" = "Capture pensamentos aqui e adicione-os ao planeamento quando quiser planear o dia.";
 "delete_note" = "Eliminar nota";
 "delete" = "Eliminar";
 "delete_note_confirmation" = "Esta nota será removida da sua entrada.";

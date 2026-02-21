@@ -370,9 +370,13 @@
 "pro" = "PRO";
 
 // MARK: - Inbox / Quick Notes
-"quick_note_placeholder" = "メモ...";
+"quick_note_placeholder" = "何か思いついたことは？";
+"inbox_capture_hint" = "後でタスクに変換できます";
+"add_note" = "追加";
+"quick_notes" = "クイックメモ";
+"add_to_timeline" = "タイムラインに追加";
 "inbox_empty_title" = "受信トレイは空です";
-"inbox_empty_subtitle" = "ここにメモを追加し、1日の計画を立てるときにタスクに変換できます。";
+"inbox_empty_subtitle" = "ここで思いついたことをメモし、計画を立てるときにタイムラインに追加できます。";
 "delete_note" = "メモを削除";
 "delete" = "削除";
 "delete_note_confirmation" = "このメモは受信トレイから削除されます。";

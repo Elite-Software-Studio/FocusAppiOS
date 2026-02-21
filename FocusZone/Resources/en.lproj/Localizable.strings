@@ -338,9 +338,13 @@
 "pro" = "PRO";
 
 // MARK: - Inbox / Quick Notes
-"quick_note_placeholder" = "Quick note...";
+"quick_note_placeholder" = "What's on your mind?";
+"inbox_capture_hint" = "Turn notes into tasks later";
+"add_note" = "Add note";
+"quick_notes" = "Quick notes";
+"add_to_timeline" = "Add to timeline";
 "inbox_empty_title" = "Your inbox is empty";
-"inbox_empty_subtitle" = "Add quick notes here and convert them to tasks when you're ready to plan your day.";
+"inbox_empty_subtitle" = "Capture thoughts here, then add them to your timeline when you're ready to plan your day.";
 "delete_note" = "Delete note";
 "delete" = "Delete";
 "delete_note_confirmation" = "This note will be removed from your inbox.";
