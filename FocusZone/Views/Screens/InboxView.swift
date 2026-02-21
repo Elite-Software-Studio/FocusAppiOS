@@ -189,6 +189,7 @@ struct InboxView: View {
         let note = QuickNote(content: trimmed)
         ctx.insert(note)
         newNoteText = ""
+        isInputFocused = false
         do {
             try ctx.save()
             fetchNotes()
