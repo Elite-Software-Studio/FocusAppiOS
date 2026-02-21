@@ -3,13 +3,14 @@
 //  FocusZone
 //
 //  Created by Julio J Fils on 7/12/25.
+//  Local-first: SwiftData is local-only. Firebase sync will be added as optional background layer.
 //
 
 import SwiftUI
 import SwiftData
-import CloudKit
+import FirebaseCore
 
-// Inbox uses a local-only container (no CloudKit) to avoid schema/load issues.
+// Inbox uses a local-only container (separate from Task store).
 private enum InboxModelContextKey: EnvironmentKey {
     static let defaultValue: ModelContext? = nil
 }
@@ -24,21 +25,24 @@ extension EnvironmentValues {
 struct FocusZoneApp: App {
     @StateObject private var themeManager = ThemeManager()
     @StateObject private var notificationService = NotificationService.shared
-    @StateObject private var cloudSyncManager = CloudSyncManager()
     @StateObject private var languageManager = LanguageManager.shared
+    @StateObject private var firebaseAuth = FirebaseAuthService.shared
 
-    /// Task container: unchanged from original app. Task-only, CloudKit-backed.
-    /// Do not add other models here; use a separate container (e.g. inbox) to avoid load/schema issues.
+    init() {
+        FirebaseApp.configure()
+    }
+
+    /// Task container: local-only (Firebase sync will be added in a later phase).
     let modelContainer: ModelContainer = {
         do {
-            let configuration = ModelConfiguration(cloudKitDatabase: .automatic)
+            let configuration = ModelConfiguration(cloudKitDatabase: .none)
             return try ModelContainer(for: Task.self, configurations: configuration)
         } catch {
-            fatalError("Failed to create CloudKit-backed ModelContainer: \(error)")
+            fatalError("Failed to create ModelContainer: \(error)")
         }
     }()
 
-    /// Inbox (QuickNote) container: separate from Task, local-only. Does not share store or schema with Task.
+    /// Inbox (QuickNote) container: separate from Task, local-only.
     let inboxModelContainer: ModelContainer = {
         do {
             let configuration = ModelConfiguration(cloudKitDatabase: .none)
@@ -53,24 +57,13 @@ struct FocusZoneApp: App {
             MainAppView()
                 .environmentObject(themeManager)
                 .environmentObject(notificationService)
-                .environmentObject(cloudSyncManager)
                 .environmentObject(languageManager)
+                .environmentObject(firebaseAuth)
                 .environment(\.inboxModelContext, inboxModelContainer.mainContext)
                 .task {
+                    firebaseAuth.configure()
                     _ = languageManager.currentLanguage
                     await requestNotificationPermission()
-                }
-                .onReceive(NotificationCenter.default.publisher(for: .CKAccountChanged)) { _ in
-                    cloudSyncManager.refreshAccountStatus()
-                }
-                .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
-                    _Concurrency.Task {
-                        await cloudSyncManager.syncData(modelContext: modelContainer.mainContext)
-                    }
-                }
-                .task {
-                    cloudSyncManager.refreshAccountStatus()
-                    await cloudSyncManager.syncData(modelContext: modelContainer.mainContext)
                 }
         }
         .modelContainer(modelContainer)

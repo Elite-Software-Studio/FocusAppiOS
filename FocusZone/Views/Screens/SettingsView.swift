@@ -1,7 +1,6 @@
 import SwiftUI
 import SwiftData
 import UserNotifications
-import CloudKit
 
 struct SettingsView: View {
     @EnvironmentObject var theme: ThemeManager
@@ -19,7 +18,6 @@ struct SettingsView: View {
     @StateObject private var focusManager = FocusModeManager()
     @StateObject private var subscriptionManager = SubscriptionManager.shared
     
-    @StateObject private var cloudSyncManager = CloudSyncManager()
     @StateObject private var languageManager = LanguageManager.shared
     @State private var showingLanguageSelection = false
     
@@ -38,7 +36,7 @@ struct SettingsView: View {
                         dataSection
                         focusSection
                         aboutSection
-                        cloudKitSyncSection
+                        syncSection
                     }
                     .padding(.horizontal, 20)
                     
@@ -361,13 +359,13 @@ struct SettingsView: View {
         }
     }
     
-    // MARK: - CloudKit Sync Section
-    private var cloudKitSyncSection: some View {
-        SettingsSection(title: NSLocalizedString("icloud_sync", comment: "iCloud Sync section title"), icon: "icloud") {
-            CloudKitSyncStatusView(cloudSyncManager: cloudSyncManager)
+    // MARK: - Sync Section (Firebase sync coming in a later phase)
+    private var syncSection: some View {
+        SettingsSection(title: NSLocalizedString("sync", comment: "Sync section title"), icon: "arrow.triangle.2.circlepath") {
+            SyncStatusPlaceholderView()
         }
     }
-    
+
     // MARK: - About Section
     private var aboutSection: some View {
         SettingsSection(title: NSLocalizedString("about", comment: "About section title"), icon: "info.circle") {
@@ -476,7 +474,7 @@ struct SettingsView: View {
                     try modelContext.save()
                     
                     await MainActor.run {
-                        clearDataMessage = "✅ Successfully deleted \(taskCount) tasks from local data (CloudKit sync will handle remote deletion)"
+                        clearDataMessage = "✅ Successfully deleted \(taskCount) tasks from local data"
                         showingClearDataAlert = true
                     }
                     

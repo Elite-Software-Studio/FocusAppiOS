@@ -12,7 +12,7 @@ enum TaskStatus: String, Codable, CaseIterable  {
 
 @Model
 class Task {
-    // CloudKit requires defaults or optionals for all attributes
+    // SwiftData: defaults for all stored properties
     var id: UUID = UUID()
     var title: String = ""
     var icon: String = ""
