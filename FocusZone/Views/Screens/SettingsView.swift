@@ -19,6 +19,7 @@ struct SettingsView: View {
     @StateObject private var subscriptionManager = SubscriptionManager.shared
     
     @StateObject private var languageManager = LanguageManager.shared
+    @EnvironmentObject private var firebaseAuth: FirebaseAuthService
     @EnvironmentObject private var firebaseSync: FirebaseSyncService
     @State private var showingLanguageSelection = false
     
@@ -32,6 +33,7 @@ struct SettingsView: View {
                     // Settings Sections
                     VStack(spacing: 20) {
                         subscriptionSection
+                        accountSection
                         appearanceSection
                         notificationSection
                         dataSection
@@ -360,6 +362,13 @@ struct SettingsView: View {
         }
     }
     
+    // MARK: - Account Section (Sign in with Apple)
+    private var accountSection: some View {
+        SettingsSection(title: NSLocalizedString("account", comment: "Account section title"), icon: "person.crop.circle") {
+            AccountSectionView(authService: firebaseAuth)
+        }
+    }
+
     // MARK: - Sync Section (Firebase)
     private var syncSection: some View {
         SettingsSection(title: NSLocalizedString("sync", comment: "Sync section title"), icon: "arrow.triangle.2.circlepath") {
@@ -1058,6 +1067,7 @@ struct ContactOptionRow: View {
 #Preview {
     SettingsView()
         .environmentObject(ThemeManager())
+        .environmentObject(FirebaseAuthService.shared)
         .environmentObject(FirebaseSyncService.shared)
 }
 

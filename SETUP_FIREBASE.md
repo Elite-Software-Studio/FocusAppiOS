@@ -22,9 +22,9 @@ You already have `GoogleService-Info.plist` in the FocusZone target. Complete th
 - Create a project (or use existing) at [Firebase Console](https://console.firebase.google.com).
 - Add an iOS app with your Bundle ID (`ios.focus.jf.com.Focus`).
 - Download `GoogleService-Info.plist` and add it to the FocusZone target (you already have this).
-- In **Authentication → Sign-in method**, enable **Anonymous**.
+- In **Authentication → Sign-in method**, enable **Anonymous** and **Apple** (Sign in with Apple).
 
-After adding the package and enabling Anonymous auth, the `FirebaseAuthService` in the project will compile and can sign in anonymously for future sync.
+After adding the package and enabling Anonymous (and Apple) auth, the `FirebaseAuthService` in the project will compile and can sign in anonymously for future sync.
 
 ## 4. Firestore (for Phase 3 sync)
 

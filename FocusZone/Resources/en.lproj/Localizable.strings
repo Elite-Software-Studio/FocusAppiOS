@@ -78,6 +78,15 @@
 // MARK: - Settings Screen Specific
 "focus" = "Focus";
 "icloud_sync" = "iCloud Sync";
+"account" = "Account";
+"sync_across_devices" = "Sync across devices";
+"sign_in_apple_subtitle" = "Sign in with Apple to use the same tasks and notes on your iPhone and iPad.";
+"signing_in" = "Signing in...";
+"signed_in_with_apple" = "Signed in with Apple";
+"signed_in_as" = "Signed in as %@";
+"sync_enabled_all_devices" = "Your data syncs on all devices where you sign in.";
+"sign_out" = "Sign out";
+"sign_out_confirm_message" = "You will stay signed in anonymously on this device. Sign in again with Apple to sync across devices.";
 "sync" = "Sync";
 "sync_local_only" = "Data is stored on this device.";
 "sync_firebase_coming" = "Cloud sync with Firebase will be available soon.";
