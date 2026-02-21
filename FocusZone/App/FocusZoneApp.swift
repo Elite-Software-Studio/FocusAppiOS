@@ -1,4 +1,3 @@
-
 //
 //  FocusZoneApp.swift
 //  FocusZone
@@ -8,20 +7,43 @@
 
 import SwiftUI
 import SwiftData
-import CloudKit 
+import CloudKit
+
+// Inbox uses a local-only container (no CloudKit) to avoid schema/load issues.
+private enum InboxModelContextKey: EnvironmentKey {
+    static let defaultValue: ModelContext? = nil
+}
+extension EnvironmentValues {
+    var inboxModelContext: ModelContext? {
+        get { self[InboxModelContextKey.self] }
+        set { self[InboxModelContextKey.self] = newValue }
+    }
+}
+
 @main
 struct FocusZoneApp: App {
     @StateObject private var themeManager = ThemeManager()
     @StateObject private var notificationService = NotificationService.shared
     @StateObject private var cloudSyncManager = CloudSyncManager()
     @StateObject private var languageManager = LanguageManager.shared
-    // CloudKit-backed SwiftData container
+
+    // CloudKit-backed container (Task only)
     let modelContainer: ModelContainer = {
         do {
             let configuration = ModelConfiguration(cloudKitDatabase: .automatic)
             return try ModelContainer(for: Task.self, configurations: configuration)
         } catch {
             fatalError("Failed to create CloudKit-backed ModelContainer: \(error)")
+        }
+    }()
+
+    // Local-only container for Inbox (QuickNote) — not synced to CloudKit
+    let inboxModelContainer: ModelContainer = {
+        do {
+            let configuration = ModelConfiguration(cloudKitDatabase: .none)
+            return try ModelContainer(for: QuickNote.self, configurations: configuration)
+        } catch {
+            fatalError("Failed to create Inbox ModelContainer: \(error)")
         }
     }()
 
@@ -32,24 +54,21 @@ struct FocusZoneApp: App {
                 .environmentObject(notificationService)
                 .environmentObject(cloudSyncManager)
                 .environmentObject(languageManager)
+                .environment(\.inboxModelContext, inboxModelContainer.mainContext)
                 .task {
-                    // Initialize language early to ensure proper localization
                     _ = languageManager.currentLanguage
-                    // Request notification permission when app launches
                     await requestNotificationPermission()
                 }
                 .onReceive(NotificationCenter.default.publisher(for: .CKAccountChanged)) { _ in
                     cloudSyncManager.refreshAccountStatus()
                 }
                 .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
-                    // Trigger sync when app becomes active
                     _Concurrency.Task {
                         await cloudSyncManager.syncData(modelContext: modelContainer.mainContext)
                     }
                 }
                 .task {
                     cloudSyncManager.refreshAccountStatus()
-                    // Initial sync when app launches
                     await cloudSyncManager.syncData(modelContext: modelContainer.mainContext)
                 }
         }

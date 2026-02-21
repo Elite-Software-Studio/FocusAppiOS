@@ -420,9 +420,18 @@
 
 // MARK: - Tab Navigation
 "timeline" = "Chronologie";
+"inbox" = "Boîte de réception";
 "insights" = "Aperçus";
 "settings" = "Paramètres";
 "pro" = "PRO";
+
+// MARK: - Inbox / Quick Notes
+"quick_note_placeholder" = "Note rapide...";
+"inbox_empty_title" = "Votre boîte de réception est vide";
+"inbox_empty_subtitle" = "Ajoutez des notes ici et convertissez-les en tâches quand vous voulez planifier votre journée.";
+"delete_note" = "Supprimer la note";
+"delete" = "Supprimer";
+"delete_note_confirmation" = "Cette note sera supprimée de votre boîte de réception.";
 
 // MARK: - ProGate Translations
 "upgrade_to_pro" = "Passer à Pro";

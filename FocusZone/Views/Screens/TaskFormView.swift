@@ -16,6 +16,8 @@ struct TaskFormView: View {
     @State private var enableFocusMode: Bool = false
     // Task to edit (nil for new task)
     let taskToEdit: Task?
+    /// Pre-filled title when opening from Inbox (convert note to task).
+    let initialTitle: String?
     
     @State private var taskTitle: String = ""
     @State private var selectedDate: Date = Calendar.current.date(byAdding: .hour, value: 1, to: Date()) ?? Date()
@@ -35,8 +37,9 @@ struct TaskFormView: View {
     @Environment(\.modelContext) private var modelContext
     private let notificationService = NotificationService.shared
     
-    init(taskToEdit: Task? = nil) {
+    init(taskToEdit: Task? = nil, initialTitle: String? = nil) {
         self.taskToEdit = taskToEdit
+        self.initialTitle = initialTitle
     }
 
     var body: some View {
@@ -127,6 +130,9 @@ struct TaskFormView: View {
         )
         .onAppear {
             loadTaskData()
+            if taskToEdit == nil, let title = initialTitle, !title.isEmpty {
+                taskTitle = title
+            }
             // Prefill next start time if available (for new tasks only)
             if taskToEdit == nil, let suggested = taskCreationState.nextSuggestedStartTime {
                 let cal = Calendar.current

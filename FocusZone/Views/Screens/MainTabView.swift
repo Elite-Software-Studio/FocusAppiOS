@@ -14,11 +14,17 @@ struct MainTabView: View {
                 }
                 .tag(0)
 
-            FocusInsightsView()
+            InboxView()
                 .tabItem {
-                    Label(NSLocalizedString("insights", comment: "Insights tab label"), systemImage: selectedTab == 1 ? "brain.head.profile.fill" : "brain.head.profile")
+                    Label(NSLocalizedString("inbox", comment: "Inbox tab label"), systemImage: selectedTab == 1 ? "tray.fill" : "tray")
                 }
                 .tag(1)
+
+            FocusInsightsView()
+                .tabItem {
+                    Label(NSLocalizedString("insights", comment: "Insights tab label"), systemImage: selectedTab == 2 ? "brain.head.profile.fill" : "brain.head.profile")
+                }
+                .tag(2)
                 .overlay(
                     // Pro badge overlay
                     proTabBadge,
@@ -29,7 +35,7 @@ struct MainTabView: View {
                 .tabItem {
                     Label(NSLocalizedString("settings", comment: "Settings tab label"), systemImage: "gear")
                 }
-                .tag(2)
+                .tag(3)
         }
         .environmentObject(subscriptionManager)
         .onAppear {
@@ -39,7 +45,7 @@ struct MainTabView: View {
     
     @ViewBuilder
     private var proTabBadge: some View {
-        if !subscriptionManager.isProUser && selectedTab != 1 {
+        if !subscriptionManager.isProUser && selectedTab != 2 {
             Text(NSLocalizedString("pro", comment: "Pro subscription badge"))
                 .font(.system(size: 8, weight: .bold))
                 .foregroundColor(.white)

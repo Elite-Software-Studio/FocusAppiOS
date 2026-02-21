@@ -332,9 +332,18 @@
 
 // MARK: - Tab Navigation
 "timeline" = "Timeline";
+"inbox" = "Inbox";
 "insights" = "Insights";
 "settings" = "Settings";
 "pro" = "PRO";
+
+// MARK: - Inbox / Quick Notes
+"quick_note_placeholder" = "Quick note...";
+"inbox_empty_title" = "Your inbox is empty";
+"inbox_empty_subtitle" = "Add quick notes here and convert them to tasks when you're ready to plan your day.";
+"delete_note" = "Delete note";
+"delete" = "Delete";
+"delete_note_confirmation" = "This note will be removed from your inbox.";
 
 // MARK: - ProGate Translations
 "upgrade_to_pro" = "Upgrade to Pro";
