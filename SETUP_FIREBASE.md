@@ -29,13 +29,18 @@ After adding the package and enabling Anonymous auth, the `FirebaseAuthService` 
 ## 4. Firestore (for Phase 3 sync)
 
 1. In Firebase Console, go to **Firestore Database** and create a database (production mode).
-2. In **Rules**, use the contents of `firestore.rules` in this repo (or paste below), then **Publish**:
+2. Open **Firestore → Rules**, replace everything with the contents of `firestore.rules` in this repo (see below), then click **Publish**. If you don’t publish, you’ll get “Missing or insufficient permissions”.
+
+**Rules to use (must Publish after editing):**
 
 ```
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /users/{userId}/{document=**} {
+    match /users/{userId}/tasks/{taskId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    match /users/{userId}/quickNotes/{noteId} {
       allow read, write: if request.auth != null && request.auth.uid == userId;
     }
   }
