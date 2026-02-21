@@ -19,6 +19,7 @@ struct SettingsView: View {
     @StateObject private var subscriptionManager = SubscriptionManager.shared
     
     @StateObject private var languageManager = LanguageManager.shared
+    @EnvironmentObject private var firebaseSync: FirebaseSyncService
     @State private var showingLanguageSelection = false
     
     var body: some View {
@@ -359,10 +360,10 @@ struct SettingsView: View {
         }
     }
     
-    // MARK: - Sync Section (Firebase sync coming in a later phase)
+    // MARK: - Sync Section (Firebase)
     private var syncSection: some View {
         SettingsSection(title: NSLocalizedString("sync", comment: "Sync section title"), icon: "arrow.triangle.2.circlepath") {
-            SyncStatusPlaceholderView()
+            FirebaseSyncStatusView(syncService: firebaseSync)
         }
     }
 
@@ -1057,6 +1058,7 @@ struct ContactOptionRow: View {
 #Preview {
     SettingsView()
         .environmentObject(ThemeManager())
+        .environmentObject(FirebaseSyncService.shared)
 }
 
 // MARK: - Language Selection Sheet

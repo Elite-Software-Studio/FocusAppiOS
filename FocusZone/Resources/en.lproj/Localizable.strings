@@ -81,6 +81,12 @@
 "sync" = "Sync";
 "sync_local_only" = "Data is stored on this device.";
 "sync_firebase_coming" = "Cloud sync with Firebase will be available soon.";
+"sync_idle" = "Ready to sync";
+"sync_syncing" = "Syncing...";
+"sync_completed" = "Synced";
+"sync_failed" = "Sync failed";
+"last_synced" = "Last synced";
+"sync_now" = "Sync now";
 "upgrade_to_pro" = "Upgrade to Pro";
 "unlock_all_features_boost_productivity" = "Unlock all features and boost your productivity";
 "restore_purchases" = "Restore Purchases";

@@ -27,25 +27,34 @@ struct FocusZoneApp: App {
     @StateObject private var notificationService = NotificationService.shared
     @StateObject private var languageManager = LanguageManager.shared
     @StateObject private var firebaseAuth = FirebaseAuthService.shared
+    @StateObject private var firebaseSync = FirebaseSyncService.shared
 
     init() {
         FirebaseApp.configure()
     }
 
-    /// Task container: local-only (Firebase sync will be added in a later phase).
+    /// Task container: local-only, explicit store in app container (not App Group) to avoid schema/table errors.
     let modelContainer: ModelContainer = {
         do {
-            let configuration = ModelConfiguration(cloudKitDatabase: .none)
+            let supportURL = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+            let focusZoneDir = supportURL.appendingPathComponent("FocusZone")
+            let taskStoreURL = focusZoneDir.appendingPathComponent("task.store")
+            try FileManager.default.createDirectory(at: focusZoneDir, withIntermediateDirectories: true)
+            let configuration = ModelConfiguration(url: taskStoreURL, cloudKitDatabase: .none)
             return try ModelContainer(for: Task.self, configurations: configuration)
         } catch {
             fatalError("Failed to create ModelContainer: \(error)")
         }
     }()
 
-    /// Inbox (QuickNote) container: separate from Task, local-only.
+    /// Inbox (QuickNote) container: separate store in app container.
     let inboxModelContainer: ModelContainer = {
         do {
-            let configuration = ModelConfiguration(cloudKitDatabase: .none)
+            let supportURL = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+            let focusZoneDir = supportURL.appendingPathComponent("FocusZone")
+            let inboxStoreURL = focusZoneDir.appendingPathComponent("inbox.store")
+            try FileManager.default.createDirectory(at: focusZoneDir, withIntermediateDirectories: true)
+            let configuration = ModelConfiguration(url: inboxStoreURL, cloudKitDatabase: .none)
             return try ModelContainer(for: QuickNote.self, configurations: configuration)
         } catch {
             fatalError("Failed to create Inbox ModelContainer: \(error)")
@@ -59,11 +68,18 @@ struct FocusZoneApp: App {
                 .environmentObject(notificationService)
                 .environmentObject(languageManager)
                 .environmentObject(firebaseAuth)
+                .environmentObject(firebaseSync)
                 .environment(\.inboxModelContext, inboxModelContainer.mainContext)
                 .task {
                     firebaseAuth.configure()
                     _ = languageManager.currentLanguage
                     await requestNotificationPermission()
+                    await firebaseSync.sync(taskContext: modelContainer.mainContext, inboxContext: inboxModelContainer.mainContext)
+                }
+                .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+                    _Concurrency.Task {
+                        await firebaseSync.sync(taskContext: modelContainer.mainContext, inboxContext: inboxModelContainer.mainContext)
+                    }
                 }
         }
         .modelContainer(modelContainer)

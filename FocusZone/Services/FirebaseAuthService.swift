@@ -33,7 +33,7 @@ final class FirebaseAuthService: ObservableObject {
             return
         }
         Auth.auth().signInAnonymously { [weak self] result, error in
-            Task { @MainActor in
+            DispatchQueue.main.async {
                 if let error = error {
                     self?.errorMessage = error.localizedDescription
                     self?.isSignedIn = false
