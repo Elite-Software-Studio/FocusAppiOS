@@ -267,6 +267,10 @@
 "duplicate_task" = "タスクを複製";
 "delete_task" = "タスクを削除";
 
+// MARK: - Conflict Group
+"conflict_at_time" = "%@ で競合";
+"resolve_conflict" = "競合を解決";
+
 // MARK: - TaskDeletionModal
 "part_of_repeating_series" = "繰り返しシリーズの一部";
 "what_would_you_like_to_delete" = "何を削除したいですか？";

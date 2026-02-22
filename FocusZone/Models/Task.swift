@@ -25,6 +25,7 @@ class Task {
     var repeatRuleRawValue: String = RepeatRule.none.rawValue
     var createdAt: Date = Date()
     var updatedAt: Date = Date()
+    var isConflictGroup: Bool = false
     
     // Parent-Child Relationship
     var parentTaskId: UUID? // Track the original task for virtual tasks

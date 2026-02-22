@@ -59,54 +59,63 @@ struct TimelineView: View {
                                     }
                                     .padding(.top, 10)
                                 } else {
-                                    ForEach(Array(viewModel.tasks.enumerated()), id: \.element.id) { index, task in
-                                        TaskCard(
-                                            title: task.title,
-                                            time: viewModel.timeRange(for: task),
-                                            icon: task.icon,
-                                            color: viewModel.taskColor(task),
-                                            isCompleted: task.isCompleted,
-                                            durationMinutes: task.durationMinutes,
-                                            task: task,
-                                            timelineViewModel: viewModel
-                                        )
-//                                        .padding(.horizontal, 16)
-//                                        .padding(.vertical, 8)
-                                        .onTapGesture {
-                                            selectedTaskForActions = task
-                                        }
-                                        
-                                        // Show break suggestions after this task
-                                        ForEach(viewModel.breakSuggestions.filter { $0.insertAfterTaskId == task.id }) { suggestion in
-                                            BreakSuggestionCard(
-                                                suggestion: suggestion,
-                                                onAccept: {
-                                                    viewModel.acceptBreakSuggestion(suggestion)
-                                                },
-                                                onDismiss: {
-                                                    viewModel.dismissBreakSuggestion(suggestion)
-                                                }
+                                    ForEach(viewModel.timelineItems()) { item in
+                                        switch item {
+                                        case .task(let task):
+                                            TaskCard(
+                                                title: task.title,
+                                                time: viewModel.timeRange(for: task),
+                                                icon: task.icon,
+                                                color: viewModel.taskColor(task),
+                                                isCompleted: task.isCompleted,
+                                                durationMinutes: task.durationMinutes,
+                                                task: task,
+                                                timelineViewModel: viewModel
                                             )
-                                            .padding(.horizontal, 16)
+                                            .onTapGesture { selectedTaskForActions = task }
+                                            
+                                            ForEach(viewModel.breakSuggestions.filter { $0.insertAfterTaskId == task.id }) { suggestion in
+                                                BreakSuggestionCard(
+                                                    suggestion: suggestion,
+                                                    onAccept: { viewModel.acceptBreakSuggestion(suggestion) },
+                                                    onDismiss: { viewModel.dismissBreakSuggestion(suggestion) }
+                                                )
+                                                .padding(.horizontal, 16)
+                                                .padding(.vertical, 4)
+                                            }
+                                            
+                                        case .conflictGroup(let group):
+                                            ConflictGroupContainer(
+                                                conflictGroup: group,
+                                                viewModel: viewModel,
+                                                onTaskTap: { selectedTaskForActions = $0 },
+                                                onResolve: { selectedTaskForActions = group.tasks.first }
+                                            )
                                             .padding(.vertical, 4)
+                                            
+                                            ForEach(group.tasks, id: \.id) { task in
+                                                ForEach(viewModel.breakSuggestions.filter { $0.insertAfterTaskId == task.id }) { suggestion in
+                                                    BreakSuggestionCard(
+                                                        suggestion: suggestion,
+                                                        onAccept: { viewModel.acceptBreakSuggestion(suggestion) },
+                                                        onDismiss: { viewModel.dismissBreakSuggestion(suggestion) }
+                                                    )
+                                                    .padding(.horizontal, 16)
+                                                    .padding(.vertical, 4)
+                                                }
+                                            }
                                         }
                                     }
                                     
-                                    // Add standalone suggestions after all tasks
                                     ForEach(viewModel.breakSuggestions.filter { $0.insertAfterTaskId == nil }) { suggestion in
                                         BreakSuggestionCard(
                                             suggestion: suggestion,
-                                            onAccept: {
-                                                viewModel.acceptBreakSuggestion(suggestion)
-                                            },
-                                            onDismiss: {
-                                                viewModel.dismissBreakSuggestion(suggestion)
-                                            }
+                                            onAccept: { viewModel.acceptBreakSuggestion(suggestion) },
+                                            onDismiss: { viewModel.dismissBreakSuggestion(suggestion) }
                                         )
                                         .padding(.horizontal, 16)
                                         .padding(.vertical, 4)
                                     }
-                                    
                                 }
                                 
                                 // Bottom padding to prevent content from hiding behind FAB

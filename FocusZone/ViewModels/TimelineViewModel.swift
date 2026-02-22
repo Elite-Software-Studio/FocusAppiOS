@@ -3,6 +3,27 @@ import SwiftUI
 import SwiftData
 import WidgetKit  // Add this import
 
+// MARK: - Conflict Group (overlapping tasks)
+struct ConflictGroup: Identifiable {
+    let id = UUID()
+    let start: Date
+    let end: Date
+    let tasks: [Task]
+}
+
+/// A single timeline row: either one task or a conflict group.
+enum TimelineItem: Identifiable {
+    case task(Task)
+    case conflictGroup(ConflictGroup)
+    
+    var id: AnyHashable {
+        switch self {
+        case .task(let t): return AnyHashable(t.id)
+        case .conflictGroup(let g): return AnyHashable(g.id)
+        }
+    }
+}
+
 @MainActor
 class TimelineViewModel: ObservableObject {
     @Published var tasks: [Task] = []
@@ -201,6 +222,53 @@ class TimelineViewModel: ObservableObject {
         } catch {
             print("Error checking for deleted instances: \(error)")
             return false
+        }
+    }
+    
+    /// Returns timeline rows: single tasks or conflict groups, in chronological order.
+    func timelineItems() -> [TimelineItem] {
+        detectConflictGroups(tasks: tasks)
+    }
+    
+    /// Detects overlapping tasks and groups them. Returns a flat list of single tasks and conflict groups in order.
+    func detectConflictGroups(tasks: [Task]) -> [TimelineItem] {
+        let sorted = tasks.sorted { $0.startTime < $1.startTime }
+        var result: [TimelineItem] = []
+        var currentGroup: [Task] = []
+        var groupEnd: Date?
+        
+        for task in sorted {
+            let taskEnd = task.estimatedEndTime
+            if let end = groupEnd, task.startTime < end {
+                currentGroup.append(task)
+                groupEnd = max(end, taskEnd)
+            } else {
+                if currentGroup.count > 1 {
+                    let start = currentGroup.map(\.startTime).min()!
+                    let end = currentGroup.map(\.estimatedEndTime).max()!
+                    result.append(.conflictGroup(ConflictGroup(start: start, end: end, tasks: currentGroup.sorted { $0.startTime < $1.startTime })))
+                } else if let single = currentGroup.first {
+                    result.append(.task(single))
+                }
+                currentGroup = [task]
+                groupEnd = taskEnd
+            }
+        }
+        if currentGroup.count > 1 {
+            let start = currentGroup.map(\.startTime).min()!
+            let end = currentGroup.map(\.estimatedEndTime).max()!
+            result.append(.conflictGroup(ConflictGroup(start: start, end: end, tasks: currentGroup.sorted { $0.startTime < $1.startTime })))
+        } else if let single = currentGroup.first {
+            result.append(.task(single))
+        }
+        
+        return result
+    }
+    
+    private func itemStart(_ item: TimelineItem) -> Date {
+        switch item {
+        case .task(let t): return t.startTime
+        case .conflictGroup(let g): return g.start
         }
     }
     

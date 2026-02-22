@@ -267,6 +267,10 @@
 "duplicate_task" = "Duplicar Tarefa";
 "delete_task" = "Eliminar Tarefa";
 
+// MARK: - Conflict Group
+"conflict_at_time" = "Conflito às %@";
+"resolve_conflict" = "Resolver conflito";
+
 // MARK: - TaskDeletionModal
 "part_of_repeating_series" = "Parte de uma série repetitiva";
 "what_would_you_like_to_delete" = "O que gostaria de eliminar?";

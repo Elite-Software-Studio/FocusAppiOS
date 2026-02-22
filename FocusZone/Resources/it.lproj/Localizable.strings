@@ -267,6 +267,10 @@
 "duplicate_task" = "Duplica Attività";
 "delete_task" = "Elimina Attività";
 
+// MARK: - Conflict Group
+"conflict_at_time" = "Conflitto alle %@";
+"resolve_conflict" = "Risolvi conflitto";
+
 // MARK: - TaskDeletionModal
 "part_of_repeating_series" = "Parte di una serie ripetitiva";
 "what_would_you_like_to_delete" = "Cosa vorresti eliminare?";

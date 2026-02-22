@@ -9,6 +9,8 @@ struct TaskCard: View {
     var durationMinutes: Int = 60
     var task: Task? = nil
     var timelineViewModel: TimelineViewModel? = nil
+    /// When true, card is inside a conflict group: hide conflict indicator and soften red (less visible).
+    var isInConflictGroup: Bool = false
     
     @State private var currentTime = Date()
     @State private var hasConflicts: Bool = false
@@ -77,8 +79,8 @@ struct TaskCard: View {
                     .foregroundColor(AppColors.textPrimary)
                     .lineLimit(2)
                 
-                // Conflict indicators
-                if hasConflicts {
+                // Conflict indicators (hidden when card is already inside a conflict group)
+                if hasConflicts && !isInConflictGroup {
                     VStack(alignment: .leading, spacing: 4) {
                         ForEach(conflictDetails) { conflict in
                             TaskConflictIndicator(conflict: conflict)
@@ -86,11 +88,11 @@ struct TaskCard: View {
                     }
                 }
                 
-                // Progress text for active tasks
+                // Progress text for active tasks (softer color when in conflict group)
                 if progressInfo.shouldShow && !isCompleted && overdueMinutesFun() / 60 < 12 {
                     Text(getProgressText())
                         .font(AppFonts.caption())
-                        .foregroundColor(progressInfo.color)
+                        .foregroundColor(progressColorTonedDown(progressInfo.color, isSevere: progressInfo.isSevere))
                 }
                 
                 Spacer()
@@ -112,8 +114,15 @@ struct TaskCard: View {
     
     // MARK: - Helper Methods for Progress Display
          
+    /// When in conflict group, use orange instead of red for progress/overdue so red is less visible.
+    private func progressColorTonedDown(_ color: Color, isSevere: Bool) -> Color {
+        guard isInConflictGroup, isSevere else { return color }
+        return .orange
+    }
+    
     @ViewBuilder
-    private func statusIndicator(progressInfo: (shouldShow: Bool, percentage: Double, color: Color)) -> some View {
+    private func statusIndicator(progressInfo: (shouldShow: Bool, percentage: Double, color: Color, isSevere: Bool)) -> some View {
+        let effectiveColor = progressColorTonedDown(progressInfo.color, isSevere: progressInfo.isSevere)
         if isCompleted {
             Image(systemName: "checkmark.circle.fill")
                 .foregroundColor(.green)
@@ -131,12 +140,12 @@ struct TaskCard: View {
                 )
         } else if progressInfo.shouldShow && overdueMinutesFun() / 60 < 12 {
             Circle()
-                .stroke(progressInfo.color, lineWidth: 3)
+                .stroke(effectiveColor, lineWidth: 3)
                 .frame(width: 24, height: 24)
                 .overlay(
                     Circle()
                         .trim(from: 0, to: CGFloat(progressInfo.percentage))
-                        .stroke(progressInfo.color, lineWidth: 3)
+                        .stroke(effectiveColor, lineWidth: 3)
                         .rotationEffect(.degrees(-90))
                         .animation(.easeInOut(duration: 0.5), value: progressInfo.percentage)
                 )
@@ -148,53 +157,51 @@ struct TaskCard: View {
     }
     
     // MARK: - Progress Calculation
-    private func calculateProgress() -> (shouldShow: Bool, percentage: Double, color: Color) {
+    /// Returns (shouldShow, percentage, color, isSevere). isSevere is true when color is red (overdue or high progress).
+    private func calculateProgress() -> (shouldShow: Bool, percentage: Double, color: Color, isSevere: Bool) {
         guard let task = task else {
-            return (false, 0.0, color)
+            return (false, 0.0, color, false)
         }
         
         let now = currentTime
         let taskStartTime = task.startTime
         let taskEndTime = task.startTime.addingTimeInterval(TimeInterval(task.durationMinutes * 60))
         
-        // If task hasn't started yet
         if now < taskStartTime {
-            return (false, 0.0, color)
+            return (false, 0.0, color, false)
         }
-        
-        // If task is completed
         if task.isCompleted {
-            return (false, 1.0, .green)
+            return (false, 1.0, .green, false)
         }
-        
-        // If task is currently active (between start and end time)
         if now >= taskStartTime && now <= taskEndTime {
             let totalDuration = taskEndTime.timeIntervalSince(taskStartTime)
             let elapsed = now.timeIntervalSince(taskStartTime)
             let progress = min(1.0, elapsed / totalDuration)
-            
             let progressColor: Color
+            let severe: Bool
             if progress < 0.7 {
                 progressColor = .green
+                severe = false
             } else if progress < 0.9 {
                 progressColor = .orange
+                severe = false
             } else {
                 progressColor = .red
+                severe = true
             }
-            
-            return (true, progress, progressColor)
+            return (true, progress, progressColor, severe)
         }
-        
-        // If task is overdue (past end time)
         if now > taskEndTime {
-            return (true, 1.0, .red)
+            return (true, 1.0, .red, true)
         }
-        
-        return (false, 0.0, color)
+        return (false, 0.0, color, false)
     }
 
     private func shouldShowConnector() -> Bool {
         // Show connector for all tasks except maybe the last one
+        if isInConflictGroup {
+            return false
+        }
         return true
     }
     
@@ -298,15 +305,12 @@ struct TaskCard: View {
     // MARK: - Conflict Detection
     
     private func checkForConflicts() {
-        guard let task = task else {
+        guard let task = task, !isInConflictGroup else {
             hasConflicts = false
             conflictDetails = []
             return
         }
         
-        // For now, we'll use a simple approach to get the TimelineViewModel
-        // In a real implementation, you might want to pass this as a parameter
-        // or use an environment object
         if let timelineViewModel = getTimelineViewModel() {
             conflictDetails = timelineViewModel.detectConflicts(for: task)
             hasConflicts = !conflictDetails.isEmpty
