@@ -34,7 +34,7 @@ struct InboxView: View {
                     }
                 }
             }
-            .navigationTitle(NSLocalizedString("inbox", comment: "Inbox screen title"))
+            .navigationTitle(LanguageManager.localized("inbox", comment: "Inbox screen title"))
             .navigationBarTitleDisplayMode(.large)
             .fullScreenCover(isPresented: $showTaskForm) {
                 TaskFormView(initialTitle: initialTitleForForm)
@@ -66,7 +66,7 @@ struct InboxView: View {
                     .foregroundColor(AppColors.accent)
 
                 VStack(alignment: .leading, spacing: 12) {
-                    TextField(NSLocalizedString("quick_note_placeholder", comment: "Quick note input placeholder"), text: $newNoteText, axis: .vertical)
+                    TextField(LanguageManager.localized("quick_note_placeholder", comment: "Quick note input placeholder"), text: $newNoteText, axis: .vertical)
                         .font(AppFonts.body())
                         .foregroundColor(AppColors.textPrimary)
                         .lineLimit(1...6)
@@ -75,7 +75,7 @@ struct InboxView: View {
                         .onSubmit { addNote() }
 
                     HStack {
-                        Text(NSLocalizedString("inbox_capture_hint", comment: "Hint under input"))
+                        Text(LanguageManager.localized("inbox_capture_hint", comment: "Hint under input"))
                             .font(AppFonts.caption())
                             .foregroundColor(AppColors.textSecondary)
 
@@ -85,7 +85,7 @@ struct InboxView: View {
                             HStack(spacing: 6) {
                                 Image(systemName: "plus")
                                     .font(.system(size: 14, weight: .semibold))
-                                Text(NSLocalizedString("add_note", comment: "Add note button"))
+                                Text(LanguageManager.localized("add_note", comment: "Add note button"))
                                     .font(AppFonts.subheadline())
                             }
                             .foregroundColor(canAddNote ? .white : AppColors.textSecondary)
@@ -132,12 +132,12 @@ struct InboxView: View {
             }
 
             VStack(spacing: 8) {
-                Text(NSLocalizedString("inbox_empty_title", comment: "Inbox empty state title"))
+                Text(LanguageManager.localized("inbox_empty_title", comment: "Inbox empty state title"))
                     .font(AppFonts.title())
                     .foregroundColor(AppColors.textPrimary)
                     .multilineTextAlignment(.center)
 
-                Text(NSLocalizedString("inbox_empty_subtitle", comment: "Inbox empty state subtitle"))
+                Text(LanguageManager.localized("inbox_empty_subtitle", comment: "Inbox empty state subtitle"))
                     .font(AppFonts.body())
                     .foregroundColor(AppColors.textSecondary)
                     .multilineTextAlignment(.center)
@@ -153,7 +153,7 @@ struct InboxView: View {
     private var notesSection: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
-                Text(NSLocalizedString("quick_notes", comment: "Section title for notes list"))
+                Text(LanguageManager.localized("quick_notes", comment: "Section title for notes list"))
                     .font(AppFonts.subheadline())
                     .fontWeight(.semibold)
                     .foregroundColor(AppColors.textSecondary)
@@ -260,7 +260,7 @@ struct InboxNoteCard: View {
                             HStack(spacing: 6) {
                                 Image(systemName: "calendar.badge.plus")
                                     .font(.system(size: 14))
-                                Text(NSLocalizedString("add_to_timeline", comment: "Convert to task button"))
+                                Text(LanguageManager.localized("add_to_timeline", comment: "Convert to task button"))
                                     .font(AppFonts.caption())
                                     .fontWeight(.medium)
                             }
@@ -286,11 +286,11 @@ struct InboxNoteCard: View {
                 .fill(AppColors.card)
                 .shadow(color: Color.black.opacity(0.05), radius: 6, x: 0, y: 1)
         )
-        .confirmationDialog(NSLocalizedString("delete_note", comment: "Delete note action"), isPresented: $showDeleteConfirm) {
-            Button(NSLocalizedString("delete", comment: "Delete button"), role: .destructive, action: onDelete)
-            Button(NSLocalizedString("cancel", comment: "Cancel button"), role: .cancel) {}
+        .confirmationDialog(LanguageManager.localized("delete_note", comment: "Delete note action"), isPresented: $showDeleteConfirm) {
+            Button(LanguageManager.localized("delete", comment: "Delete button"), role: .destructive, action: onDelete)
+            Button(LanguageManager.localized("cancel", comment: "Cancel button"), role: .cancel) {}
         } message: {
-            Text(NSLocalizedString("delete_note_confirmation", comment: "Delete note confirmation message"))
+            Text(LanguageManager.localized("delete_note_confirmation", comment: "Delete note confirmation message"))
         }
     }
 

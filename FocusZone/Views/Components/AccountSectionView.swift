@@ -29,11 +29,11 @@ struct AccountSectionView: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .confirmationDialog(NSLocalizedString("sign_out", comment: "Sign out"), isPresented: $showSignOutConfirm) {
-            Button(NSLocalizedString("sign_out", comment: "Sign out"), role: .destructive) { signOut() }
-            Button(NSLocalizedString("cancel", comment: "Cancel"), role: .cancel) {}
+        .confirmationDialog(LanguageManager.localized("sign_out", comment: "Sign out"), isPresented: $showSignOutConfirm) {
+            Button(LanguageManager.localized("sign_out", comment: "Sign out"), role: .destructive) { signOut() }
+            Button(LanguageManager.localized("cancel", comment: "Cancel"), role: .cancel) {}
         } message: {
-            Text(NSLocalizedString("sign_out_confirm_message", comment: "Sign out confirmation"))
+            Text(LanguageManager.localized("sign_out_confirm_message", comment: "Sign out confirmation"))
         }
     }
 
@@ -50,10 +50,10 @@ struct AccountSectionView: View {
                         )
                     )
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(NSLocalizedString("sync_across_devices", comment: "Sync across devices title"))
+                    Text(LanguageManager.localized("sync_across_devices", comment: "Sync across devices title"))
                         .font(AppFonts.headline())
                         .foregroundColor(AppColors.textPrimary)
-                    Text(NSLocalizedString("sign_in_apple_subtitle", comment: "Sign in with Apple subtitle"))
+                    Text(LanguageManager.localized("sign_in_apple_subtitle", comment: "Sign in with Apple subtitle"))
                         .font(AppFonts.caption())
                         .foregroundColor(AppColors.textSecondary)
                 }
@@ -70,7 +70,7 @@ struct AccountSectionView: View {
                 HStack(spacing: 8) {
                     ProgressView()
                         .scaleEffect(0.9)
-                    Text(NSLocalizedString("signing_in", comment: "Signing in..."))
+                    Text(LanguageManager.localized("signing_in", comment: "Signing in..."))
                         .font(AppFonts.caption())
                         .foregroundColor(AppColors.textSecondary)
                 }
@@ -98,7 +98,7 @@ struct AccountSectionView: View {
                     Text(displayTitle)
                         .font(AppFonts.headline())
                         .foregroundColor(AppColors.textPrimary)
-                    Text(NSLocalizedString("sync_enabled_all_devices", comment: "Sync enabled on all devices"))
+                    Text(LanguageManager.localized("sync_enabled_all_devices", comment: "Sync enabled on all devices"))
                         .font(AppFonts.caption())
                         .foregroundColor(AppColors.textSecondary)
                 }
@@ -108,7 +108,7 @@ struct AccountSectionView: View {
             Button(action: { showSignOutConfirm = true }) {
                 HStack(spacing: 6) {
                     Image(systemName: "rectangle.portrait.and.arrow.right")
-                    Text(NSLocalizedString("sign_out", comment: "Sign out"))
+                    Text(LanguageManager.localized("sign_out", comment: "Sign out"))
                         .font(AppFonts.subheadline())
                         .fontWeight(.medium)
                 }
@@ -129,9 +129,9 @@ struct AccountSectionView: View {
 
     private var displayTitle: String {
         if let name = authService.userDisplayName, !name.isEmpty {
-            return String(format: NSLocalizedString("signed_in_as", comment: "Signed in as %@"), name)
+            return String(format: LanguageManager.localized("signed_in_as", comment: "Signed in as %@"), name)
         }
-        return NSLocalizedString("signed_in_with_apple", comment: "Signed in with Apple")
+        return LanguageManager.localized("signed_in_with_apple", comment: "Signed in with Apple")
     }
 
     private func startSignInWithApple() {

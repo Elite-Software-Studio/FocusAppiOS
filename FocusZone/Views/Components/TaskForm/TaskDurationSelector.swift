@@ -38,11 +38,11 @@ struct TaskDurationSelector: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             HStack {
-                Text(NSLocalizedString("how_long", comment: "How long question for duration selection"))
+                Text(LanguageManager.localized("how_long", comment: "How long question for duration selection"))
                     .font(AppFonts.headline())
                     .foregroundColor(.gray)
                 Spacer()
-                Button(showExtendedRow ? NSLocalizedString("hide", comment: "Hide button") : NSLocalizedString("more", comment: "More button")) {
+                Button(showExtendedRow ? LanguageManager.localized("hide", comment: "Hide button") : LanguageManager.localized("more", comment: "More button")) {
                     withAnimation(.spring(response: 0.25, dampingFraction: 0.9)) {
                         showExtendedRow.toggle()
                     }
@@ -51,7 +51,7 @@ struct TaskDurationSelector: View {
                 .foregroundColor(.pink)
                 .buttonStyle(PlainButtonStyle())
                 .contextMenu {
-                    Button(NSLocalizedString("custom", comment: "Custom duration option")) { showMoreSheet = true }
+                    Button(LanguageManager.localized("custom", comment: "Custom duration option")) { showMoreSheet = true }
                 }
             }
             
@@ -112,7 +112,7 @@ private struct DurationPickerSheet: View {
     var body: some View {
         NavigationView {
             List {
-                Section(NSLocalizedString("minutes", comment: "Minutes section title")) {
+                Section(LanguageManager.localized("minutes", comment: "Minutes section title")) {
                     Picker("Minutes", selection: $selected) {
                         ForEach(allOptions, id: \.self) { m in
                             Text(label(m)).tag(m)
@@ -123,13 +123,13 @@ private struct DurationPickerSheet: View {
                     .labelsHidden()
                 }
             }
-            .navigationTitle(NSLocalizedString("select_duration", comment: "Select duration navigation title"))
+            .navigationTitle(LanguageManager.localized("select_duration", comment: "Select duration navigation title"))
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button(NSLocalizedString("cancel", comment: "Cancel button")) { dismiss() }
+                    Button(LanguageManager.localized("cancel", comment: "Cancel button")) { dismiss() }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button(NSLocalizedString("set", comment: "Set button")) {
+                    Button(LanguageManager.localized("set", comment: "Set button")) {
                         duration = selected
                         dismiss()
                     }

@@ -211,6 +211,11 @@
 "time_until_start" = "Time until start";
 "formatted_time_range" = "Time range";
 "formatted_start_time" = "Start time";
+"hrs" = "%@h";
+"min" = "%@m";
+"starts_in" = "Starts in %@";
+"remaining" = "%@ remaining";
+"overdue" = "%@ overdue";
 
 // MARK: - Errors and Messages
 "failed_load_products" = "Failed to load products: %@";
@@ -270,6 +275,17 @@
 "repeat_weekends" = "Weekends";
 "repeat_weekly" = "Weekly";
 "repeat_monthly" = "Monthly";
+
+// MARK: - Task Actions Modal
+"repeating_task_instance" = "Repeating task instance";
+"repeating_task_series" = "Repeating task series";
+"progress" = "Progress";
+"start_focus_session" = "Start Focus Session";
+"mark_complete" = "Mark Complete";
+"edit_task" = "Edit Task";
+"duplicate_task" = "Duplicate Task";
+"delete_task" = "Delete Task";
+"delete_task_navigation_title" = "Delete Task";
 
 // MARK: - Focus Insights View
 "focus_coach" = "Focus Coach";

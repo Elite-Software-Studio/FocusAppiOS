@@ -222,9 +222,9 @@ struct TaskCard: View {
         let minutes = durationMinutes % 60
         
         if hours > 0 {
-            return minutes > 0 ? String(format: NSLocalizedString("hrs", comment: "Hours abbreviation"), "\(hours)") + ", " + String(format: NSLocalizedString("min", comment: "Minutes abbreviation"), "\(minutes)") : String(format: NSLocalizedString("hrs", comment: "Hours abbreviation"), "\(hours)")
+            return minutes > 0 ? String(format: LanguageManager.localized("hrs", comment: "Hours abbreviation"), "\(hours)") + ", " + String(format: LanguageManager.localized("min", comment: "Minutes abbreviation"), "\(minutes)") : String(format: LanguageManager.localized("hrs", comment: "Hours abbreviation"), "\(hours)")
         } else {
-            return String(format: NSLocalizedString("min", comment: "Minutes abbreviation"), "\(minutes)")
+            return String(format: LanguageManager.localized("min", comment: "Minutes abbreviation"), "\(minutes)")
         }
     }
     
@@ -242,9 +242,9 @@ struct TaskCard: View {
             if minutesUntilStart > 60 {
                 let hours = minutesUntilStart / 60
                 let mins = minutesUntilStart % 60
-                return String(format: NSLocalizedString("starts_in", comment: "Starts in time format"), "\(hours)h \(mins)m")
+                return String(format: LanguageManager.localized("starts_in", comment: "Starts in time format"), "\(hours)h \(mins)m")
             } else {
-                return String(format: NSLocalizedString("starts_in", comment: "Starts in time format"), "\(minutesUntilStart)m")
+                return String(format: LanguageManager.localized("starts_in", comment: "Starts in time format"), "\(minutesUntilStart)m")
             }
         }
         
@@ -256,13 +256,13 @@ struct TaskCard: View {
             if remainingMinutes > 60 {
                 let hours = remainingMinutes / 60
                 let mins = remainingMinutes % 60
-                return mins > 0 ? String(format: NSLocalizedString("remaining", comment: "Time remaining format"), "\(hours)h \(mins)m") : String(format: NSLocalizedString("remaining", comment: "Time remaining format"), "\(hours)h")
+                return mins > 0 ? String(format: LanguageManager.localized("remaining", comment: "Time remaining format"), "\(hours)h \(mins)m") : String(format: LanguageManager.localized("remaining", comment: "Time remaining format"), "\(hours)h")
             } else if remainingMinutes > 0 {
-                return String(format: NSLocalizedString("remaining", comment: "Time remaining format"), "\(remainingMinutes)m")
+                return String(format: LanguageManager.localized("remaining", comment: "Time remaining format"), "\(remainingMinutes)m")
             } else {
                 // Less than a minute remaining
                 let remainingSeconds = Int(remaining)
-                return String(format: NSLocalizedString("remaining", comment: "Time remaining format"), "\(remainingSeconds)s")
+                return String(format: LanguageManager.localized("remaining", comment: "Time remaining format"), "\(remainingSeconds)s")
             }
         } else {
             // Task is overdue
@@ -272,9 +272,9 @@ struct TaskCard: View {
             if overdueMinutes > 60 {
                 let hours = overdueMinutes / 60
                 let mins = overdueMinutes % 60
-                return mins > 0 ? String(format: NSLocalizedString("overdue", comment: "Time overdue format"), "\(hours)h \(mins)m") : String(format: NSLocalizedString("overdue", comment: "Time overdue format"), "\(hours)h")
+                return mins > 0 ? String(format: LanguageManager.localized("overdue", comment: "Time overdue format"), "\(hours)h \(mins)m") : String(format: LanguageManager.localized("overdue", comment: "Time overdue format"), "\(hours)h")
             } else {
-                return String(format: NSLocalizedString("overdue", comment: "Time overdue format"), "\(overdueMinutes)m")
+                return String(format: LanguageManager.localized("overdue", comment: "Time overdue format"), "\(overdueMinutes)m")
             }
         }
     }

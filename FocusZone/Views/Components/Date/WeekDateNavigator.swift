@@ -52,7 +52,7 @@ struct WeekDateNavigator: View {
                         Button(action: { withAnimation(.easeInOut(duration: 0.3)) { jumpToToday() } }) {
                             HStack(spacing: 6) {
                                 Image(systemName: "location").font(.caption)
-                                Text(NSLocalizedString("today", comment: "Today label")).font(AppFonts.caption()).fontWeight(.medium)
+                                Text(LanguageManager.localized("today", comment: "Today label")).font(AppFonts.caption()).fontWeight(.medium)
                             }
                             .foregroundColor(.white)
                             .padding(.horizontal, 12)

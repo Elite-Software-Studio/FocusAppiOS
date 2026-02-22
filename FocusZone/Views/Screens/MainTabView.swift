@@ -10,19 +10,19 @@ struct MainTabView: View {
         TabView(selection: $selectedTab) {
             TimelineView(selectedTab: $selectedTab)
                 .tabItem {
-                    Label(NSLocalizedString("timeline", comment: "Timeline tab label"), systemImage: "calendar")
+                    Label(LanguageManager.localized("timeline", comment: "Timeline tab label"), systemImage: "calendar")
                 }
                 .tag(0)
 
             InboxView()
                 .tabItem {
-                    Label(NSLocalizedString("inbox", comment: "Inbox tab label"), systemImage: selectedTab == 1 ? "tray.fill" : "tray")
+                    Label(LanguageManager.localized("inbox", comment: "Inbox tab label"), systemImage: selectedTab == 1 ? "tray.fill" : "tray")
                 }
                 .tag(1)
 
             FocusInsightsView()
                 .tabItem {
-                    Label(NSLocalizedString("insights", comment: "Insights tab label"), systemImage: selectedTab == 2 ? "brain.head.profile.fill" : "brain.head.profile")
+                    Label(LanguageManager.localized("insights", comment: "Insights tab label"), systemImage: selectedTab == 2 ? "brain.head.profile.fill" : "brain.head.profile")
                 }
                 .tag(2)
                 .overlay(
@@ -33,7 +33,7 @@ struct MainTabView: View {
 
             SettingsView()
                 .tabItem {
-                    Label(NSLocalizedString("settings", comment: "Settings tab label"), systemImage: "gear")
+                    Label(LanguageManager.localized("settings", comment: "Settings tab label"), systemImage: "gear")
                 }
                 .tag(3)
         }
@@ -46,7 +46,7 @@ struct MainTabView: View {
     @ViewBuilder
     private var proTabBadge: some View {
         if !subscriptionManager.isProUser && selectedTab != 2 {
-            Text(NSLocalizedString("pro", comment: "Pro subscription badge"))
+            Text(LanguageManager.localized("pro", comment: "Pro subscription badge"))
                 .font(.system(size: 8, weight: .bold))
                 .foregroundColor(.white)
                 .padding(.horizontal, 6)

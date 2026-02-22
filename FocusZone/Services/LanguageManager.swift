@@ -7,10 +7,27 @@ class LanguageManager: ObservableObject {
     @Published var currentLanguage: String {
         didSet {
             setLanguagePreference()
-            
-            // Post notification to restart app for language change
             NotificationCenter.default.post(name: .languageChanged, object: nil)
         }
+    }
+    
+    /// Bundle for the given language code (e.g. "en", "pt-PT"). Use for runtime localization without app restart.
+    func bundle(for languageCode: String) -> Bundle {
+        guard let path = Bundle.main.path(forResource: languageCode, ofType: "lproj"),
+              let bundle = Bundle(path: path) else {
+            return .main
+        }
+        return bundle
+    }
+    
+    /// Current bundle for the selected app language. Use for localized strings at runtime.
+    var currentBundle: Bundle {
+        bundle(for: currentLanguage)
+    }
+    
+    /// Returns localized string for key using the currently selected language (no app restart needed).
+    static func localized(_ key: String, comment: String = "") -> String {
+        NSLocalizedString(key, bundle: shared.currentBundle, comment: comment)
     }
     
     let supportedLanguages = [

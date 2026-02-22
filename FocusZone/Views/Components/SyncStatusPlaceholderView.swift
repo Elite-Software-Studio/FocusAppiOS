@@ -14,11 +14,11 @@ struct SyncStatusPlaceholderView: View {
                 Image(systemName: "internaldrive")
                     .foregroundColor(AppColors.textSecondary)
                     .font(.title2)
-                Text(NSLocalizedString("sync_local_only", comment: "Data stored locally"))
+                Text(LanguageManager.localized("sync_local_only", comment: "Data stored locally"))
                     .font(AppFonts.body())
                     .foregroundColor(AppColors.textPrimary)
             }
-            Text(NSLocalizedString("sync_firebase_coming", comment: "Firebase sync coming soon"))
+            Text(LanguageManager.localized("sync_firebase_coming", comment: "Firebase sync coming soon"))
                 .font(AppFonts.caption())
                 .foregroundColor(AppColors.textSecondary)
         }

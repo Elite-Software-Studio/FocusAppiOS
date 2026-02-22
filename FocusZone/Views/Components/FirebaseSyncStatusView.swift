@@ -26,7 +26,7 @@ struct FirebaseSyncStatusView: View {
             }
 
             if let date = syncService.lastSyncDate {
-                Text(NSLocalizedString("last_synced", comment: "Last synced label") + " " + formatDate(date))
+                Text(LanguageManager.localized("last_synced", comment: "Last synced label") + " " + formatDate(date))
                     .font(AppFonts.caption())
                     .foregroundColor(AppColors.textSecondary)
             }
@@ -45,7 +45,7 @@ struct FirebaseSyncStatusView: View {
             Button(action: triggerSync) {
                 HStack(spacing: 6) {
                     Image(systemName: "arrow.triangle.2.circlepath")
-                    Text(NSLocalizedString("sync_now", comment: "Sync now button"))
+                    Text(LanguageManager.localized("sync_now", comment: "Sync now button"))
                         .font(AppFonts.subheadline())
                         .fontWeight(.medium)
                 }
@@ -85,10 +85,10 @@ struct FirebaseSyncStatusView: View {
 
     private var statusText: String {
         switch syncService.syncStatus {
-        case .idle: return NSLocalizedString("sync_idle", comment: "Sync idle")
-        case .syncing: return NSLocalizedString("sync_syncing", comment: "Syncing")
-        case .completed: return NSLocalizedString("sync_completed", comment: "Sync completed")
-        case .failed: return NSLocalizedString("sync_failed", comment: "Sync failed")
+        case .idle: return LanguageManager.localized("sync_idle", comment: "Sync idle")
+        case .syncing: return LanguageManager.localized("sync_syncing", comment: "Syncing")
+        case .completed: return LanguageManager.localized("sync_completed", comment: "Sync completed")
+        case .failed: return LanguageManager.localized("sync_failed", comment: "Sync failed")
         }
     }
 
