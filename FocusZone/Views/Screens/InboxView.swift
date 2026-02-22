@@ -168,19 +168,35 @@ struct InboxView: View {
             }
             .padding(.horizontal, 20)
 
-            ScrollView {
-                LazyVStack(spacing: 10) {
-                    ForEach(notes, id: \.id) { note in
-                        InboxNoteCard(
-                            note: note,
-                            onConvertToTask: { convertToTask(note) },
-                            onDelete: { deleteNote(note) }
-                        )
-                    }
+            List {
+                ForEach(notes, id: \.id) { note in
+                    InboxNoteCard(
+                        note: note,
+                        onConvertToTask: { convertToTask(note) },
+                        onDelete: { deleteNote(note) }
+                    )
+                    .listRowInsets(EdgeInsets(top: 5, leading: 20, bottom: 5, trailing: 20))
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
                 }
-                .padding(.horizontal, 20)
-                .padding(.bottom, 32)
+                .onDelete(perform: deleteNotesAtOffsets)
             }
+            .listStyle(.plain)
+            .scrollContentBackground(.hidden)
+        }
+    }
+
+    private func deleteNotesAtOffsets(_ offsets: IndexSet) {
+        guard let ctx = inboxContext else { return }
+        for index in offsets {
+            let note = notes[index]
+            ctx.delete(note)
+        }
+        do {
+            try ctx.save()
+            fetchNotes()
+        } catch {
+            print("InboxView: Failed to delete note: \(error)")
         }
     }
 
