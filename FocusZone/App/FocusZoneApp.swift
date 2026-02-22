@@ -70,6 +70,7 @@ struct FocusZoneApp: App {
                 .environmentObject(firebaseAuth)
                 .environmentObject(firebaseSync)
                 .environment(\.inboxModelContext, inboxModelContainer.mainContext)
+                .preferredColorScheme(themeManager.isDarkMode ? .dark : .light)
                 .task {
                     firebaseAuth.configure()
                     _ = languageManager.currentLanguage
