@@ -83,13 +83,13 @@ struct SettingsView: View {
         } message: {
             Text(clearDataMessage)
         }
-        .alert("🧪 Delete All Tasks for Testing", isPresented: $showingDeleteTaskAlert) {
-            Button("Delete All Tasks", role: .destructive) {
+        .alert(LanguageManager.localized("delete_all_tasks_testing_title", comment: "Delete all tasks testing alert title"), isPresented: $showingDeleteTaskAlert) {
+            Button(LanguageManager.localized("delete_all_tasks_testing_button", comment: "Delete all tasks button"), role: .destructive) {
                 deleteTaskForTesting()
             }
-            Button("Cancel", role: .cancel) { }
+            Button(LanguageManager.localized("cancel", comment: "Cancel button"), role: .cancel) { }
         } message: {
-            Text("This will delete ALL tasks from local data. This action cannot be undone and is for testing purposes only.")
+            Text(LanguageManager.localized("delete_all_tasks_testing_message", comment: "Delete all tasks testing message"))
         }
         
     }
@@ -351,8 +351,8 @@ struct SettingsView: View {
                 // Debug Delete All Button (only in debug mode)
             #if DEBUG
                 SettingsNavigationRow(
-                    title: "🧪 Delete All Tasks for Testing",
-                    subtitle: "Delete all tasks from local data for testing purposes",
+                    title: LanguageManager.localized("delete_all_tasks_testing_title", comment: "Delete all tasks testing row title"),
+                    subtitle: LanguageManager.localized("delete_all_tasks_testing_subtitle", comment: "Delete all tasks testing row subtitle"),
                     icon: "trash.circle.fill",
                     isDestructive: true,
                     action: { showingDeleteTaskAlert = true }
@@ -634,12 +634,12 @@ struct AboutSheet: View {
                             .font(.system(size: 60))
                             .foregroundColor(AppColors.accent)
                         
-                        Text("Focus")
+                        Text(LanguageManager.localized("focus", comment: "Focus app name in About"))
                             .font(AppFonts.title())
                             .foregroundColor(AppColors.textPrimary)
                             .fontWeight(.bold)
                         
-                        Text("Version 1.0.0")
+                        Text(LanguageManager.localized("version_number", comment: "App version number"))
                             .font(AppFonts.body())
                             .foregroundColor(AppColors.secondary)
                     }
@@ -745,7 +745,7 @@ struct AboutSheet: View {
                                 HStack(spacing: 12) {
                                     Image(systemName: "envelope.fill")
                                         .foregroundColor(AppColors.accent)
-                                    Text("support@focuszenplus.app")
+                                    Text(LanguageManager.localized("support_email", comment: "Support email address"))
                                         .foregroundColor(AppColors.accent)
                                     Spacer()
                                 }
@@ -759,7 +759,7 @@ struct AboutSheet: View {
                                 HStack(spacing: 12) {
                                     Image(systemName: "globe")
                                         .foregroundColor(AppColors.accent)
-                                    Text("focuszenplus.app")
+                                    Text(LanguageManager.localized("website_url", comment: "Website URL"))
                                         .foregroundColor(AppColors.accent)
                                     Spacer()
                                 }

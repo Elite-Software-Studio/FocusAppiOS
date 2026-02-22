@@ -107,10 +107,15 @@
 "cancel" = "Cancel";
 "data_cleared" = "Data Cleared";
 "ok" = "OK";
+"delete_all_tasks_testing_title" = "🧪 Delete All Tasks for Testing";
+"delete_all_tasks_testing_subtitle" = "Delete all tasks from local data for testing purposes";
+"delete_all_tasks_testing_button" = "Delete All Tasks";
+"delete_all_tasks_testing_message" = "This will delete ALL tasks from local data. This action cannot be undone and is for testing purposes only.";
 "all_data_successfully_cleared" = "All data has been successfully cleared. The app will now restart to apply changes.";
 "error_clearing_data" = "Error clearing data: %@";
 "about_us" = "About Us";
 "version_1_0" = "Version 1.0";
+"version_number" = "Version 1.0.0";
 "contact_support" = "Contact Support";
 "get_help_send_feedback" = "Get help and send feedback";
 

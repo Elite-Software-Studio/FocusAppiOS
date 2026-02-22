@@ -89,10 +89,15 @@
 "cancel" = "キャンセル";
 "data_cleared" = "データがクリアされました";
 "ok" = "OK";
+"delete_all_tasks_testing_title" = "🧪 テスト用にすべてのタスクを削除";
+"delete_all_tasks_testing_subtitle" = "テスト目的でローカルデータからすべてのタスクを削除";
+"delete_all_tasks_testing_button" = "すべてのタスクを削除";
+"delete_all_tasks_testing_message" = "ローカルデータからすべてのタスクが削除されます。この操作は元に戻せず、テスト目的のみです。";
 "all_data_successfully_cleared" = "すべてのデータが正常にクリアされました。アプリは変更を適用するために再起動されます。";
 "error_clearing_data" = "データのクリア中にエラーが発生しました：%@";
 "about_us" = "私たちについて";
 "version_1_0" = "バージョン1.0";
+"version_number" = "バージョン1.0.0";
 "contact_support" = "サポートに連絡";
 "get_help_send_feedback" = "ヘルプを取得してフィードバックを送信";
 

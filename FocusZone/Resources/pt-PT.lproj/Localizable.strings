@@ -89,10 +89,15 @@
 "cancel" = "Cancelar";
 "data_cleared" = "Dados Limpos";
 "ok" = "OK";
+"delete_all_tasks_testing_title" = "🧪 Eliminar todas as tarefas (teste)";
+"delete_all_tasks_testing_subtitle" = "Eliminar todas as tarefas dos dados locais para fins de teste";
+"delete_all_tasks_testing_button" = "Eliminar todas as tarefas";
+"delete_all_tasks_testing_message" = "Isto irá eliminar TODAS as tarefas dos dados locais. Esta ação não pode ser desfeita e é apenas para fins de teste.";
 "all_data_successfully_cleared" = "Todos os dados foram limpos com sucesso. O aplicativo será reiniciado para aplicar as alterações.";
 "error_clearing_data" = "Erro ao limpar dados: %@";
 "about_us" = "Sobre Nós";
 "version_1_0" = "Versão 1.0";
+"version_number" = "Versão 1.0.0";
 "contact_support" = "Contatar Suporte";
 "get_help_send_feedback" = "Obtenha ajuda e envie feedback";
 

@@ -89,10 +89,15 @@
 "cancel" = "Annulla";
 "data_cleared" = "Dati Cancellati";
 "ok" = "OK";
+"delete_all_tasks_testing_title" = "🧪 Elimina tutte le attività (test)";
+"delete_all_tasks_testing_subtitle" = "Elimina tutte le attività dai dati locali a scopo di test";
+"delete_all_tasks_testing_button" = "Elimina tutte le attività";
+"delete_all_tasks_testing_message" = "Questo eliminerà TUTTE le attività dai dati locali. Questa azione non può essere annullata ed è solo a scopo di test.";
 "all_data_successfully_cleared" = "Tutti i dati sono stati cancellati con successo. L'app si riavvierà per applicare le modifiche.";
 "error_clearing_data" = "Errore durante la cancellazione dei dati: %@";
 "about_us" = "Chi Siamo";
 "version_1_0" = "Versione 1.0";
+"version_number" = "Versione 1.0.0";
 "contact_support" = "Contatta Supporto";
 "get_help_send_feedback" = "Ottieni aiuto e invia feedback";
 
