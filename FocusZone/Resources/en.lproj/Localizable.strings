@@ -22,7 +22,9 @@
 "create_task" = "Create Task";
 "update_task" = "Update Task";
 "no_tasks_today" = "No tasks for today";
+"no_tasks_for_today" = "No tasks for today";
 "add_first_task" = "Tap the + button to create your first task";
+"tap_plus_to_create_first_task" = "Tap the + button to create your first task";
 "all_done" = "All Done!";
 "great_work_today" = "Great work today";
 "no_tasks" = "No Tasks";
