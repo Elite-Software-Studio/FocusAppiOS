@@ -16,12 +16,12 @@ struct ProGate: View {
                     .font(.system(size: 48))
                     .foregroundColor(.yellow)
                 
-                Text(NSLocalizedString("upgrade_to_pro", comment: "Upgrade to Pro title"))
+                Text(LanguageManager.localized("upgrade_to_pro", comment: "Upgrade to Pro title"))
                     .font(AppFonts.title())
                     .fontWeight(.bold)
                     .foregroundColor(AppColors.textPrimary)
                 
-                Text(String(format: NSLocalizedString("task_limit_reached", comment: "Task limit reached message"), maxTasks))
+                Text(String(format: LanguageManager.localized("task_limit_reached", comment: "Task limit reached message"), maxTasks))
                     .font(AppFonts.body())
                     .foregroundColor(AppColors.textSecondary)
                     .multilineTextAlignment(.center)
@@ -58,7 +58,7 @@ struct ProGate: View {
                                 .font(.system(size: 16))
                         }
                         
-                        Text(NSLocalizedString("upgrade_now", comment: "Upgrade now button"))
+                        Text(LanguageManager.localized("upgrade_now", comment: "Upgrade now button"))
                             .font(AppFonts.headline())
                             .fontWeight(.semibold)
                     }
@@ -77,7 +77,7 @@ struct ProGate: View {
                 .disabled(subscriptionManager.isLoading)
                 
                 Button(action: onDismiss) {
-                    Text(NSLocalizedString("maybe_later", comment: "Maybe later button"))
+                    Text(LanguageManager.localized("maybe_later", comment: "Maybe later button"))
                         .font(AppFonts.body())
                         .foregroundColor(AppColors.textSecondary)
                 }

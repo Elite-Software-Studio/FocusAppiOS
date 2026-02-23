@@ -318,10 +318,10 @@ struct ProFeatures {
     
     static var proFeaturesList: [String] {
         return [
-            NSLocalizedString("unlimited_tasks", comment: "Unlimited tasks feature"),
-            NSLocalizedString("advanced_insights_recommendations", comment: "Advanced insights and recommendations feature"),
-            NSLocalizedString("custom_focus_modes", comment: "Custom focus modes feature"),
-            NSLocalizedString("smart_break_suggestions", comment: "Smart break suggestions feature"),
+            LanguageManager.localized("unlimited_tasks", comment: "Unlimited tasks feature"),
+            LanguageManager.localized("advanced_insights_recommendations", comment: "Advanced insights and recommendations feature"),
+            LanguageManager.localized("custom_focus_modes", comment: "Custom focus modes feature"),
+            LanguageManager.localized("smart_break_suggestions", comment: "Smart break suggestions feature"),
         ]
     }
 }

@@ -52,11 +52,11 @@ struct TaskActionsModal: View {
                                 
                                 // Show task type indicator
                                 if task.isGeneratedFromRepeat {
-                                    Text(NSLocalizedString("repeating_task_instance", comment: "Repeating task instance label"))
+                                    Text(LanguageManager.localized("repeating_task_instance", comment: "Repeating task instance label"))
                                         .font(AppFonts.caption())
                                         .foregroundColor(.orange)
                                 } else if task.isParentTask {
-                                    Text(NSLocalizedString("repeating_task_series", comment: "Repeating task series label"))
+                                    Text(LanguageManager.localized("repeating_task_series", comment: "Repeating task series label"))
                                         .font(AppFonts.caption())
                                         .foregroundColor(.blue)
                                 }
@@ -77,7 +77,7 @@ struct TaskActionsModal: View {
                         if timerService._minutesRemain(for: task) > 0 {
                             VStack(spacing: 6) {
                                 HStack {
-                                    Text(NSLocalizedString("progress", comment: "Progress label"))
+                                    Text(LanguageManager.localized("progress", comment: "Progress label"))
                                         .font(AppFonts.caption())
                                         .foregroundColor(.gray)
                                     Spacer()
@@ -107,7 +107,7 @@ struct TaskActionsModal: View {
                     VStack(spacing: 1) {
                         if (!task.isCompleted || timerService._minutesRemain(for: task) < 0) && isCurrentTimeInTaskWindow {
                             TaskActionButton(
-                                title: NSLocalizedString("start_focus_session", comment: "Start focus session button"),
+                                title: LanguageManager.localized("start_focus_session", comment: "Start focus session button"),
                                 icon: "play.fill",
                                 color: task.color,
                                 action: {
@@ -118,7 +118,7 @@ struct TaskActionsModal: View {
                         
                         if !task.isCompleted {
                             TaskActionButton(
-                                title: NSLocalizedString("mark_complete", comment: "Mark complete button"),
+                                title: LanguageManager.localized("mark_complete", comment: "Mark complete button"),
                                 icon: "checkmark.circle",
                                 color: .green,
                                 action: {
@@ -129,7 +129,7 @@ struct TaskActionsModal: View {
                         }
                         
                         TaskActionButton(
-                            title: NSLocalizedString("edit_task", comment: "Edit task button"),
+                            title: LanguageManager.localized("edit_task", comment: "Edit task button"),
                             icon: "pencil",
                             color: .blue,
                             action: {
@@ -139,7 +139,7 @@ struct TaskActionsModal: View {
                         )
                         
                         TaskActionButton(
-                            title: NSLocalizedString("duplicate_task", comment: "Duplicate task button"),
+                            title: LanguageManager.localized("duplicate_task", comment: "Duplicate task button"),
                             icon: "doc.on.doc",
                             color: .orange,
                             action: {
@@ -152,7 +152,7 @@ struct TaskActionsModal: View {
                             .padding(.vertical, 8)
                         
                         TaskActionButton(
-                            title: NSLocalizedString("delete_task", comment: "Delete task button"),
+                            title: LanguageManager.localized("delete_task", comment: "Delete task button"),
                             icon: "trash",
                             color: .red,
                             isDestructive: true,

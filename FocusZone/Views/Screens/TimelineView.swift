@@ -5,6 +5,7 @@ import SwiftData
 typealias FocusTask = Task
 
 struct TimelineView: View {
+    @Binding var selectedTab: Int
     @StateObject private var viewModel = TimelineViewModel()
     @ObservedObject private var timerService = TaskTimerService.shared
     @EnvironmentObject var notificationService: NotificationService
@@ -47,71 +48,74 @@ struct TimelineView: View {
                                             .font(.system(size: 48))
                                             .foregroundColor(AppColors.textSecondary)
                                         
-                                        Text(NSLocalizedString("no_tasks_for_today", comment: "No tasks message"))
+                                        Text(LanguageManager.localized("no_tasks_for_today", comment: "No tasks message"))
                                             .font(AppFonts.headline())
                                             .foregroundColor(AppColors.textSecondary)
                                         
-                                        Text(NSLocalizedString("tap_plus_to_create_first_task", comment: "Instruction to create first task"))
+                                        Text(LanguageManager.localized("tap_plus_to_create_first_task", comment: "Instruction to create first task"))
                                             .font(AppFonts.body())
                                             .foregroundColor(AppColors.textSecondary)
                                             .multilineTextAlignment(.center)
                                     }
                                     .padding(.top, 10)
                                 } else {
-                                    ForEach(Array(viewModel.tasks.enumerated()), id: \.element.id) { index, task in
-                                        TaskCard(
-                                            title: task.title,
-                                            time: viewModel.timeRange(for: task),
-                                            icon: task.icon,
-                                            color: viewModel.taskColor(task),
-                                            isCompleted: task.isCompleted,
-                                            durationMinutes: task.durationMinutes,
-                                            task: task,
-                                            timelineViewModel: viewModel
-                                        )
-//                                        .padding(.horizontal, 16)
-//                                        .padding(.vertical, 8)
-                                        .onTapGesture {
-                                            selectedTaskForActions = task
-                                        }
-                                        
-                                        // Show break suggestions after this task
-                                        ForEach(viewModel.breakSuggestions.filter { $0.insertAfterTaskId == task.id }) { suggestion in
-                                            BreakSuggestionCard(
-                                                suggestion: suggestion,
-                                                onAccept: {
-                                                    viewModel.acceptBreakSuggestion(suggestion)
-                                                },
-                                                onDismiss: {
-                                                    viewModel.dismissBreakSuggestion(suggestion)
-                                                }
+                                    ForEach(viewModel.timelineItems()) { item in
+                                        switch item {
+                                        case .task(let task):
+                                            TaskCard(
+                                                title: task.title,
+                                                time: viewModel.timeRange(for: task),
+                                                icon: task.icon,
+                                                color: viewModel.taskColor(task),
+                                                isCompleted: task.isCompleted,
+                                                durationMinutes: task.durationMinutes,
+                                                task: task,
+                                                timelineViewModel: viewModel
                                             )
-                                            .padding(.horizontal, 16)
+                                            .onTapGesture { selectedTaskForActions = task }
+                                            
+                                            ForEach(viewModel.breakSuggestions.filter { $0.insertAfterTaskId == task.id }) { suggestion in
+                                                BreakSuggestionCard(
+                                                    suggestion: suggestion,
+                                                    onAccept: { viewModel.acceptBreakSuggestion(suggestion) },
+                                                    onDismiss: { viewModel.dismissBreakSuggestion(suggestion) }
+                                                )
+                                                .padding(.horizontal, 16)
+                                                .padding(.vertical, 4)
+                                            }
+                                            
+                                        case .conflictGroup(let group):
+                                            ConflictGroupContainer(
+                                                conflictGroup: group,
+                                                viewModel: viewModel,
+                                                onTaskTap: { selectedTaskForActions = $0 },
+                                                onResolve: { selectedTaskForActions = group.tasks.first }
+                                            )
                                             .padding(.vertical, 4)
+                                            
+                                            ForEach(group.tasks, id: \.id) { task in
+                                                ForEach(viewModel.breakSuggestions.filter { $0.insertAfterTaskId == task.id }) { suggestion in
+                                                    BreakSuggestionCard(
+                                                        suggestion: suggestion,
+                                                        onAccept: { viewModel.acceptBreakSuggestion(suggestion) },
+                                                        onDismiss: { viewModel.dismissBreakSuggestion(suggestion) }
+                                                    )
+                                                    .padding(.horizontal, 16)
+                                                    .padding(.vertical, 4)
+                                                }
+                                            }
                                         }
                                     }
                                     
-                                    // Add standalone suggestions after all tasks
                                     ForEach(viewModel.breakSuggestions.filter { $0.insertAfterTaskId == nil }) { suggestion in
                                         BreakSuggestionCard(
                                             suggestion: suggestion,
-                                            onAccept: {
-                                                viewModel.acceptBreakSuggestion(suggestion)
-                                            },
-                                            onDismiss: {
-                                                viewModel.dismissBreakSuggestion(suggestion)
-                                            }
+                                            onAccept: { viewModel.acceptBreakSuggestion(suggestion) },
+                                            onDismiss: { viewModel.dismissBreakSuggestion(suggestion) }
                                         )
                                         .padding(.horizontal, 16)
                                         .padding(.vertical, 4)
                                     }
-                                    
-                                    // And add this to the onChange modifier for selectedDate:
-                                    .onChange(of: selectedDate) { _, newDate in
-                                        viewModel.loadTodayTasks(for: newDate)
-                                        viewModel.updateBreakSuggestions() // Add this line
-                                    }
-                                    
                                 }
                                 
                                 // Bottom padding to prevent content from hiding behind FAB
@@ -155,7 +159,11 @@ struct TimelineView: View {
         .onChange(of: selectedDate) { _, newDate in
             viewModel.loadTodayTasks(for: newDate)
             viewModel.refreshTasksWithBreakSuggestions(for: newDate)
-            
+        }
+        .onChange(of: selectedTab) { _, newValue in
+            if newValue == 0 {
+                viewModel.forceRefreshTasks(for: selectedDate)
+            }
         }
         .sheet(isPresented: $showAddTaskForm, onDismiss: {
             // Refresh timeline after creating a task with a small delay to ensure data is saved
@@ -222,15 +230,15 @@ struct TimelineView: View {
                 .presentationDragIndicator(.visible)
             }
         }
-        .alert(NSLocalizedString("enable_notifications", comment: "Enable notifications alert title"), isPresented: $showNotificationAlert) {
-            Button(NSLocalizedString("enable", comment: "Enable button text")) {
+        .alert(LanguageManager.localized("enable_notifications", comment: "Enable notifications alert title"), isPresented: $showNotificationAlert) {
+            Button(LanguageManager.localized("enable", comment: "Enable button text")) {
                 _Concurrency.Task {
                     await viewModel.requestNotificationPermission()
                 }
             }
-            Button(NSLocalizedString("later", comment: "Later button text"), role: .cancel) { }
+            Button(LanguageManager.localized("later", comment: "Later button text"), role: .cancel) { }
         } message: {
-            Text(NSLocalizedString("enable_notifications_message", comment: "Enable notifications message"))
+            Text(LanguageManager.localized("enable_notifications_message", comment: "Enable notifications message"))
         }
     }
     
@@ -241,19 +249,19 @@ struct TimelineView: View {
                 .font(.title2)
             
             VStack(alignment: .leading, spacing: 4) {
-                Text(NSLocalizedString("notifications_disabled_banner", comment: "Notifications disabled banner title"))
+                Text(LanguageManager.localized("notifications_disabled_banner", comment: "Notifications disabled banner title"))
                     .font(AppFonts.subheadline())
                     .fontWeight(.semibold)
                     .foregroundColor(AppColors.textPrimary)
                 
-                Text(NSLocalizedString("enable_to_get_task_reminders", comment: "Enable to get task reminders"))
+                Text(LanguageManager.localized("enable_to_get_task_reminders", comment: "Enable to get task reminders"))
                     .font(AppFonts.caption())
                     .foregroundColor(AppColors.textSecondary)
             }
             
             Spacer()
             
-            Button(NSLocalizedString("enable", comment: "Enable button text")) {
+            Button(LanguageManager.localized("enable", comment: "Enable button text")) {
                 showNotificationAlert = true
             }
             .font(AppFonts.caption())
@@ -293,9 +301,9 @@ struct TimelineView: View {
     private func setupViewModels() {
         viewModel.setModelContext(modelContext)
         timerService.setModelContext(modelContext)
-        viewModel.loadTodayTasks(for: selectedDate)
-        viewModel.refreshTasksWithBreakSuggestions(for: selectedDate) // Changed this line
-        
+        viewModel.forceRefreshTasks(for: selectedDate)
+        viewModel.refreshTasksWithBreakSuggestions(for: selectedDate)
+
         // Show notification permission alert if not authorized
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             if !notificationService.isAuthorized {

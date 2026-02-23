@@ -89,10 +89,15 @@
 "cancel" = "Cancelar";
 "data_cleared" = "Dados Limpos";
 "ok" = "OK";
+"delete_all_tasks_testing_title" = "🧪 Eliminar todas as tarefas (teste)";
+"delete_all_tasks_testing_subtitle" = "Eliminar todas as tarefas dos dados locais para fins de teste";
+"delete_all_tasks_testing_button" = "Eliminar todas as tarefas";
+"delete_all_tasks_testing_message" = "Isto irá eliminar TODAS as tarefas dos dados locais. Esta ação não pode ser desfeita e é apenas para fins de teste.";
 "all_data_successfully_cleared" = "Todos os dados foram limpos com sucesso. O aplicativo será reiniciado para aplicar as alterações.";
 "error_clearing_data" = "Erro ao limpar dados: %@";
 "about_us" = "Sobre Nós";
 "version_1_0" = "Versão 1.0";
+"version_number" = "Versão 1.0.0";
 "contact_support" = "Contatar Suporte";
 "get_help_send_feedback" = "Obtenha ajuda e envie feedback";
 
@@ -262,6 +267,10 @@
 "duplicate_task" = "Duplicar Tarefa";
 "delete_task" = "Eliminar Tarefa";
 
+// MARK: - Conflict Group
+"conflict_at_time" = "Conflito às %@";
+"resolve_conflict" = "Resolver conflito";
+
 // MARK: - TaskDeletionModal
 "part_of_repeating_series" = "Parte de uma série repetitiva";
 "what_would_you_like_to_delete" = "O que gostaria de eliminar?";
@@ -364,9 +373,22 @@
 
 // MARK: - Tab Navigation
 "timeline" = "Cronologia";
+"inbox" = "Entrada";
 "insights" = "Perspetivas";
 "settings" = "Definições";
 "pro" = "PRO";
+
+// MARK: - Inbox / Quick Notes
+"quick_note_placeholder" = "O que tem em mente?";
+"inbox_capture_hint" = "Transforme notas em tarefas mais tarde";
+"add_note" = "Adicionar nota";
+"quick_notes" = "Notas rápidas";
+"add_to_timeline" = "Adicionar ao planeamento";
+"inbox_empty_title" = "A sua entrada está vazia";
+"inbox_empty_subtitle" = "Capture pensamentos aqui e adicione-os ao planeamento quando quiser planear o dia.";
+"delete_note" = "Eliminar nota";
+"delete" = "Eliminar";
+"delete_note_confirmation" = "Esta nota será removida da sua entrada.";
 
 // MARK: - ProGate Translations
 "upgrade_to_pro" = "Atualizar para Pro";

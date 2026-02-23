@@ -89,10 +89,15 @@
 "cancel" = "キャンセル";
 "data_cleared" = "データがクリアされました";
 "ok" = "OK";
+"delete_all_tasks_testing_title" = "🧪 テスト用にすべてのタスクを削除";
+"delete_all_tasks_testing_subtitle" = "テスト目的でローカルデータからすべてのタスクを削除";
+"delete_all_tasks_testing_button" = "すべてのタスクを削除";
+"delete_all_tasks_testing_message" = "ローカルデータからすべてのタスクが削除されます。この操作は元に戻せず、テスト目的のみです。";
 "all_data_successfully_cleared" = "すべてのデータが正常にクリアされました。アプリは変更を適用するために再起動されます。";
 "error_clearing_data" = "データのクリア中にエラーが発生しました：%@";
 "about_us" = "私たちについて";
 "version_1_0" = "バージョン1.0";
+"version_number" = "バージョン1.0.0";
 "contact_support" = "サポートに連絡";
 "get_help_send_feedback" = "ヘルプを取得してフィードバックを送信";
 
@@ -262,6 +267,10 @@
 "duplicate_task" = "タスクを複製";
 "delete_task" = "タスクを削除";
 
+// MARK: - Conflict Group
+"conflict_at_time" = "%@ で競合";
+"resolve_conflict" = "競合を解決";
+
 // MARK: - TaskDeletionModal
 "part_of_repeating_series" = "繰り返しシリーズの一部";
 "what_would_you_like_to_delete" = "何を削除したいですか？";
@@ -364,9 +373,22 @@
 
 // MARK: - Tab Navigation
 "timeline" = "タイムライン";
+"inbox" = "受信トレイ";
 "insights" = "洞察";
 "settings" = "設定";
 "pro" = "PRO";
+
+// MARK: - Inbox / Quick Notes
+"quick_note_placeholder" = "何か思いついたことは？";
+"inbox_capture_hint" = "後でタスクに変換できます";
+"add_note" = "追加";
+"quick_notes" = "クイックメモ";
+"add_to_timeline" = "タイムラインに追加";
+"inbox_empty_title" = "受信トレイは空です";
+"inbox_empty_subtitle" = "ここで思いついたことをメモし、計画を立てるときにタイムラインに追加できます。";
+"delete_note" = "メモを削除";
+"delete" = "削除";
+"delete_note_confirmation" = "このメモは受信トレイから削除されます。";
 
 // MARK: - ProGate Translations
 "upgrade_to_pro" = "Proにアップグレード";

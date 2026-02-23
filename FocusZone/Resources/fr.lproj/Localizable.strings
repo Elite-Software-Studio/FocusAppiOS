@@ -89,10 +89,15 @@
 "cancel" = "Annuler";
 "data_cleared" = "Données effacées";
 "ok" = "OK";
+"delete_all_tasks_testing_title" = "🧪 Supprimer toutes les tâches (test)";
+"delete_all_tasks_testing_subtitle" = "Supprimer toutes les tâches des données locales à des fins de test";
+"delete_all_tasks_testing_button" = "Supprimer toutes les tâches";
+"delete_all_tasks_testing_message" = "Cela supprimera TOUTES les tâches des données locales. Cette action est irréversible et réservée aux tests.";
 "all_data_successfully_cleared" = "Toutes les données ont été effacées avec succès. L'application va maintenant redémarrer pour appliquer les changements.";
 "error_clearing_data" = "Erreur lors de l'effacement des données : %@";
 "about_us" = "À propos de nous";
 "version_1_0" = "Version 1.0";
+"version_number" = "Version 1.0.0";
 "contact_support" = "Contacter le support";
 "get_help_send_feedback" = "Obtenir de l'aide et envoyer des commentaires";
 
@@ -318,6 +323,10 @@
 "duplicate_task" = "Dupliquer la Tâche";
 "delete_task" = "Supprimer la Tâche";
 
+// MARK: - Conflict Group
+"conflict_at_time" = "Conflit à %@";
+"resolve_conflict" = "Résoudre le conflit";
+
 // MARK: - TaskDeletionModal
 "part_of_repeating_series" = "Partie d'une série répétitive";
 "what_would_you_like_to_delete" = "Que souhaitez-vous supprimer ?";
@@ -420,9 +429,22 @@
 
 // MARK: - Tab Navigation
 "timeline" = "Chronologie";
+"inbox" = "Boîte de réception";
 "insights" = "Aperçus";
 "settings" = "Paramètres";
 "pro" = "PRO";
+
+// MARK: - Inbox / Quick Notes
+"quick_note_placeholder" = "Quoi de neuf ?";
+"inbox_capture_hint" = "Transformez les notes en tâches plus tard";
+"add_note" = "Ajouter";
+"quick_notes" = "Notes rapides";
+"add_to_timeline" = "Ajouter au planning";
+"inbox_empty_title" = "Votre boîte de réception est vide";
+"inbox_empty_subtitle" = "Saisissez vos idées ici, puis ajoutez-les à votre planning quand vous êtes prêt.";
+"delete_note" = "Supprimer la note";
+"delete" = "Supprimer";
+"delete_note_confirmation" = "Cette note sera supprimée de votre boîte de réception.";
 
 // MARK: - ProGate Translations
 "upgrade_to_pro" = "Passer à Pro";

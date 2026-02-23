@@ -8,17 +8,23 @@ struct MainTabView: View {
     
     var body: some View {
         TabView(selection: $selectedTab) {
-            TimelineView()
+            TimelineView(selectedTab: $selectedTab)
                 .tabItem {
-                    Label(NSLocalizedString("timeline", comment: "Timeline tab label"), systemImage: "calendar")
+                    Label(LanguageManager.localized("timeline", comment: "Timeline tab label"), systemImage: "calendar")
                 }
                 .tag(0)
 
-            FocusInsightsView()
+            InboxView()
                 .tabItem {
-                    Label(NSLocalizedString("insights", comment: "Insights tab label"), systemImage: selectedTab == 1 ? "brain.head.profile.fill" : "brain.head.profile")
+                    Label(LanguageManager.localized("inbox", comment: "Inbox tab label"), systemImage: selectedTab == 1 ? "tray.fill" : "tray")
                 }
                 .tag(1)
+
+            FocusInsightsView()
+                .tabItem {
+                    Label(LanguageManager.localized("insights", comment: "Insights tab label"), systemImage: selectedTab == 2 ? "brain.head.profile.fill" : "brain.head.profile")
+                }
+                .tag(2)
                 .overlay(
                     // Pro badge overlay
                     proTabBadge,
@@ -27,9 +33,9 @@ struct MainTabView: View {
 
             SettingsView()
                 .tabItem {
-                    Label(NSLocalizedString("settings", comment: "Settings tab label"), systemImage: "gear")
+                    Label(LanguageManager.localized("settings", comment: "Settings tab label"), systemImage: "gear")
                 }
-                .tag(2)
+                .tag(3)
         }
         .environmentObject(subscriptionManager)
         .onAppear {
@@ -39,8 +45,8 @@ struct MainTabView: View {
     
     @ViewBuilder
     private var proTabBadge: some View {
-        if !subscriptionManager.isProUser && selectedTab != 1 {
-            Text(NSLocalizedString("pro", comment: "Pro subscription badge"))
+        if !subscriptionManager.isProUser && selectedTab != 2 {
+            Text(LanguageManager.localized("pro", comment: "Pro subscription badge"))
                 .font(.system(size: 8, weight: .bold))
                 .foregroundColor(.white)
                 .padding(.horizontal, 6)

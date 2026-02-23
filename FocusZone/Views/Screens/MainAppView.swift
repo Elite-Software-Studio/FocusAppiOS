@@ -7,7 +7,8 @@ struct MainAppView: View {
     @State private var showMainApp = false
     
     var body: some View {
-        Group {
+        let _ = languageManager.currentLanguage // Refresh entire UI when language changes (no restart needed)
+        return Group {
             if showMainApp {
                 // Show main app after splash screen
                 if hasSeenOnboarding {

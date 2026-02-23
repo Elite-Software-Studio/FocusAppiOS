@@ -89,10 +89,15 @@
 "cancel" = "Annulla";
 "data_cleared" = "Dati Cancellati";
 "ok" = "OK";
+"delete_all_tasks_testing_title" = "🧪 Elimina tutte le attività (test)";
+"delete_all_tasks_testing_subtitle" = "Elimina tutte le attività dai dati locali a scopo di test";
+"delete_all_tasks_testing_button" = "Elimina tutte le attività";
+"delete_all_tasks_testing_message" = "Questo eliminerà TUTTE le attività dai dati locali. Questa azione non può essere annullata ed è solo a scopo di test.";
 "all_data_successfully_cleared" = "Tutti i dati sono stati cancellati con successo. L'app si riavvierà per applicare le modifiche.";
 "error_clearing_data" = "Errore durante la cancellazione dei dati: %@";
 "about_us" = "Chi Siamo";
 "version_1_0" = "Versione 1.0";
+"version_number" = "Versione 1.0.0";
 "contact_support" = "Contatta Supporto";
 "get_help_send_feedback" = "Ottieni aiuto e invia feedback";
 
@@ -262,6 +267,10 @@
 "duplicate_task" = "Duplica Attività";
 "delete_task" = "Elimina Attività";
 
+// MARK: - Conflict Group
+"conflict_at_time" = "Conflitto alle %@";
+"resolve_conflict" = "Risolvi conflitto";
+
 // MARK: - TaskDeletionModal
 "part_of_repeating_series" = "Parte di una serie ripetitiva";
 "what_would_you_like_to_delete" = "Cosa vorresti eliminare?";
@@ -364,9 +373,22 @@
 
 // MARK: - Tab Navigation
 "timeline" = "Cronologia";
+"inbox" = "Posta in arrivo";
 "insights" = "Approfondimenti";
 "settings" = "Impostazioni";
 "pro" = "PRO";
+
+// MARK: - Inbox / Quick Notes
+"quick_note_placeholder" = "A cosa stai pensando?";
+"inbox_capture_hint" = "Trasforma le note in attività più tardi";
+"add_note" = "Aggiungi nota";
+"quick_notes" = "Note rapide";
+"add_to_timeline" = "Aggiungi al planning";
+"inbox_empty_title" = "La posta in arrivo è vuota";
+"inbox_empty_subtitle" = "Cattura i pensieri qui, poi aggiungili al planning quando sei pronto.";
+"delete_note" = "Elimina nota";
+"delete" = "Elimina";
+"delete_note_confirmation" = "Questa nota sarà rimossa dalla posta in arrivo.";
 
 // MARK: - ProGate Translations
 "upgrade_to_pro" = "Passa a Pro";

@@ -22,7 +22,9 @@
 "create_task" = "Create Task";
 "update_task" = "Update Task";
 "no_tasks_today" = "No tasks for today";
+"no_tasks_for_today" = "No tasks for today";
 "add_first_task" = "Tap the + button to create your first task";
+"tap_plus_to_create_first_task" = "Tap the + button to create your first task";
 "all_done" = "All Done!";
 "great_work_today" = "Great work today";
 "no_tasks" = "No Tasks";
@@ -78,6 +80,24 @@
 // MARK: - Settings Screen Specific
 "focus" = "Focus";
 "icloud_sync" = "iCloud Sync";
+"account" = "Account";
+"sync_across_devices" = "Sync across devices";
+"sign_in_apple_subtitle" = "Sign in with Apple to use the same tasks and notes on your iPhone and iPad.";
+"signing_in" = "Signing in...";
+"signed_in_with_apple" = "Signed in with Apple";
+"signed_in_as" = "Signed in as %@";
+"sync_enabled_all_devices" = "Your data syncs on all devices where you sign in.";
+"sign_out" = "Sign out";
+"sign_out_confirm_message" = "You will stay signed in anonymously on this device. Sign in again with Apple to sync across devices.";
+"sync" = "Sync";
+"sync_local_only" = "Data is stored on this device.";
+"sync_firebase_coming" = "Cloud sync with Firebase will be available soon.";
+"sync_idle" = "Ready to sync";
+"sync_syncing" = "Syncing...";
+"sync_completed" = "Synced";
+"sync_failed" = "Sync failed";
+"last_synced" = "Last synced";
+"sync_now" = "Sync now";
 "upgrade_to_pro" = "Upgrade to Pro";
 "unlock_all_features_boost_productivity" = "Unlock all features and boost your productivity";
 "restore_purchases" = "Restore Purchases";
@@ -89,10 +109,15 @@
 "cancel" = "Cancel";
 "data_cleared" = "Data Cleared";
 "ok" = "OK";
+"delete_all_tasks_testing_title" = "🧪 Delete All Tasks for Testing";
+"delete_all_tasks_testing_subtitle" = "Delete all tasks from local data for testing purposes";
+"delete_all_tasks_testing_button" = "Delete All Tasks";
+"delete_all_tasks_testing_message" = "This will delete ALL tasks from local data. This action cannot be undone and is for testing purposes only.";
 "all_data_successfully_cleared" = "All data has been successfully cleared. The app will now restart to apply changes.";
 "error_clearing_data" = "Error clearing data: %@";
 "about_us" = "About Us";
 "version_1_0" = "Version 1.0";
+"version_number" = "Version 1.0.0";
 "contact_support" = "Contact Support";
 "get_help_send_feedback" = "Get help and send feedback";
 
@@ -193,6 +218,11 @@
 "time_until_start" = "Time until start";
 "formatted_time_range" = "Time range";
 "formatted_start_time" = "Start time";
+"hrs" = "%@h";
+"min" = "%@m";
+"starts_in" = "Starts in %@";
+"remaining" = "%@ remaining";
+"overdue" = "%@ overdue";
 
 // MARK: - Errors and Messages
 "failed_load_products" = "Failed to load products: %@";
@@ -252,6 +282,35 @@
 "repeat_weekends" = "Weekends";
 "repeat_weekly" = "Weekly";
 "repeat_monthly" = "Monthly";
+
+// MARK: - Task Actions Modal
+"repeating_task_instance" = "Repeating task instance";
+"repeating_task_series" = "Repeating task series";
+"progress" = "Progress";
+"start_focus_session" = "Start Focus Session";
+"mark_complete" = "Mark Complete";
+"edit_task" = "Edit Task";
+"duplicate_task" = "Duplicate Task";
+"delete_task" = "Delete Task";
+"delete_task_navigation_title" = "Delete Task";
+
+// MARK: - Conflict Group
+"conflict_at_time" = "Conflict at %@";
+"resolve_conflict" = "Resolve conflict";
+
+// MARK: - TaskDeletionModal
+"part_of_repeating_series" = "Part of repeating series";
+"what_would_you_like_to_delete" = "What would you like to delete?";
+"delete_this_instance" = "Delete This Instance";
+"remove_only_this_occurrence" = "Remove only this occurrence";
+"delete_all_instances" = "Delete All Instances";
+"remove_the_entire_repeating_series" = "Remove the entire repeating series";
+"delete_future_instances" = "Delete Future Instances";
+"keep_past_remove_upcoming_occurrences" = "Keep past, remove upcoming occurrences";
+"delete_entire_series" = "Delete Entire Series";
+"remove_this_task_and_all_its_instances" = "Remove this task and all its instances";
+"keep_completed_instances_remove_future_ones" = "Keep completed instances, remove future ones";
+"this_action_cannot_be_undone" = "This action cannot be undone";
 
 // MARK: - Focus Insights View
 "focus_coach" = "Focus Coach";
@@ -332,9 +391,22 @@
 
 // MARK: - Tab Navigation
 "timeline" = "Timeline";
+"inbox" = "Inbox";
 "insights" = "Insights";
 "settings" = "Settings";
 "pro" = "PRO";
+
+// MARK: - Inbox / Quick Notes
+"quick_note_placeholder" = "What's on your mind?";
+"inbox_capture_hint" = "Turn notes into tasks later";
+"add_note" = "Add note";
+"quick_notes" = "Quick notes";
+"add_to_timeline" = "Add to timeline";
+"inbox_empty_title" = "Your inbox is empty";
+"inbox_empty_subtitle" = "Capture thoughts here, then add them to your timeline when you're ready to plan your day.";
+"delete_note" = "Delete note";
+"delete" = "Delete";
+"delete_note_confirmation" = "This note will be removed from your inbox.";
 
 // MARK: - ProGate Translations
 "upgrade_to_pro" = "Upgrade to Pro";

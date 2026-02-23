@@ -8,7 +8,7 @@ struct TaskRepeatSelector: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             HStack {
-                Text(NSLocalizedString("how_often", comment: "How often question for repeat selection"))
+                Text(LanguageManager.localized("how_often", comment: "How often question for repeat selection"))
                     .font(AppFonts.headline())
                     .foregroundColor(.gray)
                 Spacer()
